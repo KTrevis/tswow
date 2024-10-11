@@ -8,6 +8,6 @@ const nodes = [
     {map:0,x:-9430.226562,y:87.487625,z:56.927204,o:3.381032},
 ]
 
-const STORMWIND_FLIGHTMASTER = 2
-std.Taxi.createBiFromNode("trevis", "Goldshire Flight Path", 'FLIGHTPATH', STORMWIND_FLIGHTMASTER, 0, 0, nodes)
+const STORMWIND_NODE = 2
+std.Taxi.createBiFromNode("trevis", "Goldshire Flight Path", 'FLIGHTPATH', STORMWIND_NODE, 0, 0, nodes)
 .EndName.enGB.set("Goldshire, Elwynn")
