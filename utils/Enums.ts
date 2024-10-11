@@ -1,0 +1,14 @@
+export enum ZoneID {
+    STORMWIND = 1519,
+    ELWYNN = 12,
+    ORGRIMMAR = 1637,
+    DUROTAR = 14,
+    DUN_MOROGH = 1,
+    IRONFORGE = 1537,
+    TELDRASSIL = 141,
+    DARNASSUS = 1657,
+    UNDERCITY = 1497,
+    TIRISFAL_GLADES = 85,
+    MULGORE = 215,
+    THUNDER_BLUFF = 1638,
+}
