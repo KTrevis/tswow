@@ -28,6 +28,9 @@ function spawnFlightMasters(faction: Faction, spawns: CreatureInstancePosition[]
         gossip.Text.add({enGB:'Haha'})
     })
     .Spawns.add('trevis', name + "Spawn", spawns)
+    .Level.set(80)
+    .Rank.ELITE.set()
+    .PvPFlags.set(0)
 }
 
 spawnFlightMasters(Faction.ALLIANCE,
