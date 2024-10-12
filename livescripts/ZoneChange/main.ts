@@ -1,5 +1,5 @@
-import setupZoneRestriction from "./LimitZones"
+import restrictZones from "./LimitZones"
 
 export default function onZoneChange(events: TSEvents) {
-    setupZoneRestriction(events)
+    events.Player.OnUpdateZone(restrictZones)
 }
