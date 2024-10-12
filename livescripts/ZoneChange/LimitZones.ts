@@ -41,5 +41,5 @@ export default function restrictZones(player: TSPlayer, newZone: number) {
     console.log(`${player.GetName()} entered a forbidden zone: ${newZone}`)
     if (player.HasAura(aura)) return
     player.AddAura(aura, player)
-    player.SendAreaTriggerMessage(`You are not allowed to be here. You will be teleported to your capital in 10 seconds if you do not leave this zone.`)
+    player.SendAreaTriggerMessage(`You are not allowed to be here. You will be teleported to your faction capital in 10 seconds if you do not leave this zone.`)
 }
