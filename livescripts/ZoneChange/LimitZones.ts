@@ -34,6 +34,7 @@ const aura = UTAG("trevis", "Forbidden zone")
 
 export default function restrictZones(player: TSPlayer, newZone: number) {
     if (player.IsGM()) return
+    if (player.HasUnitState(256)) return // this mean the player is on a taxi
     if (allowedZones.includes(newZone)) {
         player.RemoveAura(aura)
         return
