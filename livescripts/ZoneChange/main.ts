@@ -1,4 +1,4 @@
-import restrictZones from "./LimitZones"
+import restrictZones from "./ForbiddenZone"
 
 const FLIGHTMASTER = 8192
 

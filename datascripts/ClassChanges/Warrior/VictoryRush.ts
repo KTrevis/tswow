@@ -1,5 +1,6 @@
 import { std } from "wow/wotlk"
-import { PercentUnits } from "wow/wotlk/std/Misc/PercentCell"
+
+// now heals for 10% of maximum life
 
 const spell = std.Spells.load(34428)
 .Effects.addMod((eff) => {
