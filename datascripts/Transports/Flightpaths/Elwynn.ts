@@ -21,4 +21,4 @@ nodes = [
 ]
 
 std.Taxi.createBiFromNode("trevis", "Elwynn Logging Camp Flight Path", 'FLIGHTPATH', goldshireNode.EndNode.get().ID, 0, 0, nodes)
-.EndName.enGB.set("Eastvale Loggin Camp, Elwynn")
+.EndName.enGB.set("Eastvale Logging Camp, Elwynn")

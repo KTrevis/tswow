@@ -9,7 +9,8 @@ export interface KillingQuestObjective {
 }
 
 export enum AreaSort {
-    ELWYNN = 12
+    ELWYNN = 12,
+    NORTHSHIRE = 9
 }
 
 export function createKillingQuest(questName: string, questgiver: CreatureTemplate, toKill: KillingQuestObjective[], questLevel: number, area: AreaSort): Quest {
@@ -23,7 +24,6 @@ export function createKillingQuest(questName: string, questgiver: CreatureTempla
     .CompleteText.enGB.set("Great job!")
     .Rewards.Difficulty.set(5)
     .AreaSort.set(area)
-    .POIs.forEach(value => { value.delete() })
 
     function setObjectives() {
         quest.Objectives.Entity.clearAll()
@@ -33,10 +33,7 @@ export function createKillingQuest(questName: string, questgiver: CreatureTempla
             const creature = std.CreatureTemplates.load(curr.id)
             str += curr.quantity + " "
             str += creature.Name.enGB.get() + ", "
-            quest.Objectives.Entity.addMod(value => {
-                value.ID.set(curr.id)
-                .Count.set(curr.quantity)
-            })
+            quest.Objectives.Entity.add(curr.id, curr.quantity)
         })
         str += `then return to ${questgiver.Name.enGB.get()}.`
         quest.ObjectiveText.enGB.set(str)
