@@ -56,7 +56,8 @@ Do you want to become a mortal?
 
 WARNING:
 - Once you turned on hardcore mode on a character, you cannot go back.
-- Any death is definitive, even if it happened because of a bug.`)
+- Any death is definitive, even if it happened because of a bug.
+- Once you get above level 1 you cannot turn on hardcore mode anymore.`)
 })
 .InlineScripts.OnGossipSelect((creature, player, menuID, selectionID, cancel) => {
     const HARDCORE = 0

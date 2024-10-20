@@ -6,5 +6,4 @@ export function Main(events: TSEvents) {
     onLevelChange(events)
     onZoneChange(events)
     onDeath(events)
-    
 }

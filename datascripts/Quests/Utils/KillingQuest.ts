@@ -3,12 +3,12 @@ import { std } from "wow/wotlk";
 import { Quest } from "wow/wotlk/std/Quest/Quest";
 import { Position } from "wow/wotlk/std/Misc/Position";
 
-export interface KillinQuestObjective {
+export interface KillingQuestObjective {
     id: number,
     quantity: number
 }
 
-export function createKillingQuest(questName: string, questgiver: CreatureTemplate, toKill: KillinQuestObjective[], questLevel: number): Quest {
+export function createKillingQuest(questName: string, questgiver: CreatureTemplate, toKill: KillingQuestObjective[], questLevel: number): Quest {
     const quest = std.Quests.create("trevis", questName, 7)
     .PrevQuest.set(0)
     .MinLevel.set(questLevel)
@@ -18,6 +18,7 @@ export function createKillingQuest(questName: string, questgiver: CreatureTempla
     .CompleteLogText.enGB.set(`Return to ${questgiver.Name.enGB.get()}.`)
     .CompleteText.enGB.set("Great job!")
     .Rewards.Difficulty.set(5)
+    .POIs.forEach(value => value.delete())
 
     function setObjectives() {
         quest.Objectives.Entity.clearAll()

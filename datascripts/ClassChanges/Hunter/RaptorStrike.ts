@@ -1,4 +1,6 @@
 import { std } from "wow/wotlk";
+import { quest_templateQuery } from "wow/wotlk/sql/quest_template";
+import { ClassIDs } from "wow/wotlk/std/Class/ClassIDs";
 
 const spell = std.Spells.load(2973)
 .Attributes.NEXT_SWING.set(0)

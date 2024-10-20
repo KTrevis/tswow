@@ -1,7 +1,6 @@
 import { std } from "wow/wotlk"
 
 // now heals for 10% of maximum life
-
 const spell = std.Spells.load(34428)
 .Effects.addMod((eff) => {
     eff.Type.HEAL_PCT.set()
