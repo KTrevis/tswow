@@ -35,6 +35,7 @@ function spawnFlightMasters(faction: Faction, spawns: CreatureInstancePosition[]
 
 spawnFlightMasters(Faction.ALLIANCE,
     [
+        {map:0,x:-9462.375977,y:-1310.017822,z:44.422550,o:2.580904}, // elwynn logging camp
         {map:0,x:-9437.098633,y:86.529785,z:57.098427,o:5.460080}, // goldshire
         {map:0,x:-5658.920410,y:-494.865540,z:396.980682,o:1.205576}, // kharanos
         {map:1,x:9968.129883,y:2627.334473,z:1315.407471,o:4.194031}, // darnassus
@@ -49,3 +50,7 @@ spawnFlightMasters(Faction.HORDE,
         {map:0,x:2268.025391,y:361.607971,z:35.176403,o:6.132594}, // tirisfal
     ]
 )
+
+std.GameObjectInstances.create("trevis", "GoldshireGryphonRoost")
+.Template.set(182254)
+.Position.set({map:0,x:-9438.624023,y:89.859406,z:57.452370,o:5.062848},)

@@ -8,7 +8,11 @@ export interface KillingQuestObjective {
     quantity: number
 }
 
-export function createKillingQuest(questName: string, questgiver: CreatureTemplate, toKill: KillingQuestObjective[], questLevel: number): Quest {
+export enum AreaSort {
+    ELWYNN = 12
+}
+
+export function createKillingQuest(questName: string, questgiver: CreatureTemplate, toKill: KillingQuestObjective[], questLevel: number, area: AreaSort): Quest {
     const quest = std.Quests.create("trevis", questName, 7)
     .PrevQuest.set(0)
     .MinLevel.set(questLevel)
@@ -18,7 +22,8 @@ export function createKillingQuest(questName: string, questgiver: CreatureTempla
     .CompleteLogText.enGB.set(`Return to ${questgiver.Name.enGB.get()}.`)
     .CompleteText.enGB.set("Great job!")
     .Rewards.Difficulty.set(5)
-    .POIs.forEach(value => value.delete())
+    .AreaSort.set(area)
+    .POIs.forEach(value => { value.delete() })
 
     function setObjectives() {
         quest.Objectives.Entity.clearAll()

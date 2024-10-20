@@ -1,7 +1,7 @@
 import { std } from "wow/wotlk";
 import { FactionTemplateValues } from "wow/wotlk/std/Faction/FactionTemplates";
 import { QuestObjective } from "wow/wotlk/std/Quest/QuestObjective";
-import {createKillingQuest, KillingQuestObjective} from "../Utils/KillingQuest";
+import {AreaSort, createKillingQuest, KillingQuestObjective} from "../Utils/KillingQuest";
 import { Position } from "wow/wotlk/std/Misc/Position";
 
 const name = "Let Me Fish!"
@@ -19,9 +19,10 @@ const POI: Position[] = [
     {map:0,x:-9401.033203,y:-478.712280,z:71.112885,o:1.307343},
 ]
 
-const quest = createKillingQuest(name, questgiver, toKill, 6)
+const quest = createKillingQuest(name, questgiver, toKill, 6, AreaSort.ELWYNN)
 .POIs.add(0, POI)
 .POIs.add(1, POI)
-.PickupText.enGB.set(`Me and my friend Lee Brown just want to fish, but those stupids Murlocs are scaring the fish away! 
-Please do something about that, this is our business.`)
+.POIs.forEach(value => value.WorldMapArea.set(0))
+.PickupText.enGB.set(`Me and my friend Lee Brown just want to fish, but those stupids Murlocs are scaring the fishes away! 
+Please do something about it, this is our business.`)
 .Rewards.Item.add(4496, 1)
