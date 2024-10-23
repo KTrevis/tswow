@@ -58,5 +58,7 @@ function addTalentPointItemToQuest(id: number) {
     .Rewards.Item.add(talentPointItem.ID, 1)
 }
 
-const quest = [176]
-quest.forEach(id => addTalentPointItemToQuest(id))
+const quests = [
+    176, // Hogger
+]
+quests.forEach(id => addTalentPointItemToQuest(id))

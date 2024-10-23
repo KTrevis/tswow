@@ -19,8 +19,8 @@ const POI: Position[] = [
     {map:0,x:-9401.033203,y:-478.712280,z:71.112885,o:1.307343},
 ]
 
-const quest = createKillingQuest(name, questgiver, toKill, 6, AreaSort.ELWYNN)
-.POIs.forEach(value => { value.delete() })
+const quest = createKillingQuest(name, questgiver, toKill, 6)
+// .POIs.forEach(value => { value.delete() })
 .POIs.add(0, POI)
 .POIs.add(1, POI)
 .POIs.forEach(value => value.WorldMapArea.set(0))

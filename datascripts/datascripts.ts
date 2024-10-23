@@ -12,3 +12,12 @@ function changeHearthstoneCooldown() {
 }
 
 changeHearthstoneCooldown()
+
+export const TEST_MAP = std.Maps
+    .create('trevis','test-map')
+    .Directory.set('testmap')
+    .Name.enGB.set('Test Map')
+    .LoadingScreen.setSimple('LoadingScreen\\LoadingScreen.blp')
+    .Tiles.add('trevis',[[1,1,6,6,'testmap']])
+    .Flags.set(std.Maps.load(0).Flags.get())
+    .Tags.addUnique('trevis','test-map')
