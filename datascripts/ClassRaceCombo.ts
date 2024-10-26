@@ -1,4 +1,5 @@
 import { std } from "wow/wotlk";
+import { StringLookupsDBCFile } from "wow/wotlk/dbc/StringLookups";
 import { ClassIDs } from "wow/wotlk/std/Class/ClassIDs";
 import { RaceMask } from "wow/wotlk/std/Race/RaceType";
 

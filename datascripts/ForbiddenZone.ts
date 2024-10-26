@@ -19,8 +19,5 @@ const spell = std.Spells.create("trevis", name)
     if (application.GetAura().GetDuration() != 0) return
     const player = ToPlayer(effect.GetCaster())
     if (!player || player.IsGM()) return
-    if (player.IsAlliance())
-        player.Teleport(0, -8825.294922, 624.907715, 93.822655, 3.754547); // stormwind
-    else 
-        player.Teleport(1, 1629.359985, -4373.390137, 31.256399, 3.548390); // orgrimmar
+    player.Teleport(1, 5495.261719, -3725.772949, 1597.171753, 3.084047)
 })

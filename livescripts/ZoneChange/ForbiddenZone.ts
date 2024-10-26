@@ -12,22 +12,24 @@ export enum ZoneID {
     MULGORE = 215,
     THUNDER_BLUFF = 1638,
     DEEPRUN_TRAM = 2257,
+    HYJAL = 616,
 }
 
 const allowedZones: number[] = [
-    ZoneID.DUROTAR,
-    ZoneID.ELWYNN,
-    ZoneID.ORGRIMMAR,
-    ZoneID.STORMWIND,
-    ZoneID.DUN_MOROGH,
-    ZoneID.DARNASSUS,
-    ZoneID.TELDRASSIL,
-    ZoneID.MULGORE,
-    ZoneID.THUNDER_BLUFF,
-    ZoneID.TIRISFAL_GLADES,
-    ZoneID.UNDERCITY,
-    ZoneID.DEEPRUN_TRAM,
-    ZoneID.IRONFORGE,
+    ZoneID.HYJAL,
+    // ZoneID.DUROTAR,
+    // ZoneID.ELWYNN,
+    // ZoneID.ORGRIMMAR,
+    // ZoneID.STORMWIND,
+    // ZoneID.DUN_MOROGH,
+    // ZoneID.DARNASSUS,
+    // ZoneID.TELDRASSIL,
+    // ZoneID.MULGORE,
+    // ZoneID.THUNDER_BLUFF,
+    // ZoneID.TIRISFAL_GLADES,
+    // ZoneID.UNDERCITY,
+    // ZoneID.DEEPRUN_TRAM,
+    // ZoneID.IRONFORGE,
 ]
 
 const aura = UTAG("trevis", "Forbidden zone")
