@@ -25,4 +25,4 @@ std.GameObjectInstances.create("trevis", "HyjalGoblinWorkshopSpawn")
 std.InlineScripts.Player.OnLogin((player, firstLogin) => {
     if (!firstLogin) return
     player.Teleport(1, 5495.261719, -3725.772949, 1597.171753, 3.084047)
-})
+}) 
