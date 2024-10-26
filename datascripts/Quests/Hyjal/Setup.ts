@@ -1,11 +1,32 @@
 import { std } from "wow/wotlk"
-    import { Position } from "wow/wotlk/std/Misc/Position"
+import { Position } from "wow/wotlk/std/Misc/Position"
+import { AreaSort } from "../Utils/KillingQuest"
+import { Area } from "wow/wotlk/std/Area/Area"
 
 std.Spells.load(42202).delete() // makes hyjal accessible
 
+export const HYJAL_SPAWN = {map:1,x:5495.605957,y:-3725.211914,z:1600,o:3.041286}
+
+const HYJAL_MAP = std.WorldMapAreas.create()
+.Map.set(1)
+.Area.set(AreaSort.HYJAL)
+.Directory.set("Hyjal")
+.Boundary.Top.set(-3643)
+.Boundary.Bottom.set(-3280)
+.Boundary.Right.set(4800)
+.Boundary.Left.set(5230)
+
+HYJAL_MAP.Overlays.addGet()
+.Areas.addId(AreaSort.HYJAL)
+.Texture.set("HyjalWorldMap", 1000, 667)
+// .HitRect.Top.set(-3643)
+// .HitRect.Bottom.set(-3280)
+// .HitRect.Right.set(4800)
+// .HitRect.Left.set(5230)
+
 std.GMTeleports.create()
 .Name.set("spawn")
-.Position.set({map: 1, x: 5495.261719, y: -3725.772949, z: 1597.171753, o: 3.084047})
+.Position.set(HYJAL_SPAWN)
 
 function changeHyjalDoor() {
     const OLD_HYJAL_DOOR = std.GameObjectInstances.load(49094)
@@ -27,6 +48,7 @@ std.GameObjectInstances.create("trevis", "HyjalGoblinWorkshopSpawn")
 .Position.set({map:1,x:5493.584961,y:-3733.395508,z:1593.542358,o:1.475291},)
 
 std.InlineScripts.Player.OnLogin((player, firstLogin) => {
+    const HYJAL_SPAWN = {map:1,x:5495.605957,y:-3725.211914,z:1597.186523,o:3.041286}
     if (!firstLogin) return
-    player.Teleport(1, 5495.261719, -3725.772949, 1600, 3.084047)
+    player.Teleport(HYJAL_SPAWN.map, HYJAL_SPAWN.x, HYJAL_SPAWN.y, HYJAL_SPAWN.z, HYJAL_SPAWN.o)
 })
