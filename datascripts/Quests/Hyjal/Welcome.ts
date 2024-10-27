@@ -1,5 +1,5 @@
 import { std } from "wow/wotlk";
-import { AreasID, createKillingQuest } from "../Utils/KillingQuest";
+import { AreasID, createKillingQuest } from "../Utils/QuestCreator";
 import { HYJAL_MAP } from "./Setup/Map";
 
 const name = "HyjalWelcome"

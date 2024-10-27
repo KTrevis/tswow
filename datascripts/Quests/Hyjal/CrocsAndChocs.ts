@@ -1,18 +1,13 @@
 import { std } from "wow/wotlk";
 import { helpFromMyFremenies, GearmasterGizwizzle } from "./HelpFromMyFremenies";
-import { AreasID } from "../Utils/KillingQuest";
+import { AreasID } from "../Utils/QuestCreator";
 import { creature_questitemRow } from "wow/wotlk/sql/creature_questitem";
 import { addItemQuestTooltipToCreature } from "../Utils/ItemQuestTooltip";
+import { ItemCreator } from "../Utils/ItemCreator";
 
 const name = "Crocs and Chocs"
 
-const crocImbre = std.Items.create("trevis", name + "item")
-    .Name.enGB.set("Croc-imbres")
-    .DisplayInfo.setSimpleIcon("trevis", name + "ItemIcon", "Interface\\Icons\\inv_misc_monsterfang_02")
-    .Flags.HAS_QUEST_GLOW.set(true)
-    .Quality.WHITE.set()
-    .Bonding.QUEST_ITEM.set()
-    .MaxStack.set(20)
+const crocImbre = ItemCreator.createBasicItemQuest("Croc-imbres", "inv_misc_monsterfang_02")
 
 const crocolisk = std.CreatureTemplates.create("trevis", name + "Crocolisk", 3110)
     .MovementType.RANDOM_MOVEMENT.set()
@@ -45,15 +40,11 @@ const crocolisk = std.CreatureTemplates.create("trevis", name + "Crocolisk", 311
         { map: 1, x: 5493.217285, y: -3567.960938, z: 1560.095581, o: 3.818799 },
         { map: 1, x: 5452.302734, y: -3600.858398, z: 1560.570435, o: 3.818799 },
         { map: 1, x: 5416.311523, y: -3618.397461, z: 1560.329834, o: 2.448279 },
-    ])
-
-crocolisk.Spawns.forEach(value => {
-    value.WanderDistance.set(10)
-})
+    ], spawn => spawn.WanderDistance.set(10))
 
 std.Loot.Creature.load(crocolisk.NormalLoot.get()).addItem(crocImbre.ID, 100, 1, 1, true)
 
-const crocsAndChocs = std.Quests.create("trevis", name + "Quest", 33)
+export const crocsAndChocs = std.Quests.create("trevis", name + "Quest", 33)
     .Name.enGB.set(name)
     .Objectives.Item.mod(0, value => value.Item.set(crocImbre.ID))
     .Questgiver.addCreatureBoth(GearmasterGizwizzle.ID)

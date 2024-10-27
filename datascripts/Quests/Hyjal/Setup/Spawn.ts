@@ -9,7 +9,7 @@ std.GMTeleports.create()
 .Position.set(HYJAL_SPAWN)
 
 std.InlineScripts.Player.OnLogin((player, firstLogin) => {
-    const HYJAL_SPAWN = {map:1,x:5495.605957,y:-3725.211914,z:1597.186523,o:3.041286}
+    const HYJAL_SPAWN = {map:1,x:5496.201172,y:-3734.774414,z:1597.045044,o:2.593613}
     if (!firstLogin) return
     player.Teleport(HYJAL_SPAWN.map, HYJAL_SPAWN.x, HYJAL_SPAWN.y, HYJAL_SPAWN.z, HYJAL_SPAWN.o)
 })

@@ -1,5 +1,5 @@
 import { std } from "wow/wotlk";
-import { AreasID } from "./Quests/Utils/KillingQuest";
+import { AreasID } from "./Quests/Utils/QuestCreator";
 
 const name = "Forbidden Zone"
 

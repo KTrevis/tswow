@@ -3,7 +3,7 @@ import { std } from "wow/wotlk";
 import { Quest } from "wow/wotlk/std/Quest/Quest";
 import { Position } from "wow/wotlk/std/Misc/Position";
 
-export interface KillingQuestObjective {
+export interface ObjectiveQuest {
     id: number,
     quantity: number
 }
@@ -27,7 +27,7 @@ export enum AreasID {
     HYJAL = 616,
 }
 
-export function createKillingQuest(questName: string, questgiver: CreatureTemplate, toKill: KillingQuestObjective[], questLevel: number, AreasID: AreasID): Quest {
+function createKillingQuest(questName: string, questgiver: CreatureTemplate, toKill: ObjectiveQuest[], questLevel: number, area: AreasID): Quest {
     const quest = std.Quests.create("trevis", "KillingQuestCreator" + questName)
     .MinLevel.set(questLevel)
     .QuestLevel.set(questLevel + 1)
@@ -36,7 +36,7 @@ export function createKillingQuest(questName: string, questgiver: CreatureTempla
     .CompleteLogText.enGB.set(`Return to ${questgiver.Name.enGB.get()}.`)
     .CompleteText.enGB.set("Great job!")
     .Rewards.Difficulty.set(5)
-    .AreaSort.set(AreasID)
+    .AreaSort.set(area)
 
     function setObjectives() {
         let str = "Kill "
@@ -52,4 +52,36 @@ export function createKillingQuest(questName: string, questgiver: CreatureTempla
     }
     setObjectives()
     return quest
+}
+
+function createCollectQuest(name: string, questgiver: CreatureTemplate, toCollect: ObjectiveQuest[], questLevel: number, area: AreasID) {
+    const quest = std.Quests.create("trevis", "KillingQuestCreator" + name)
+    .MinLevel.set(questLevel)
+    .QuestLevel.set(questLevel + 1)
+    .Questgiver.addCreatureBoth(questgiver.ID, true)
+    .Name.enGB.set(name)
+    .CompleteLogText.enGB.set(`Return to ${questgiver.Name.enGB.get()}.`)
+    .CompleteText.enGB.set("Great job!")
+    .Rewards.Difficulty.set(5)
+    .AreaSort.set(area)
+
+    function setObjectives() {
+        let str = "Collect "
+
+        toCollect.forEach((curr, index) => {
+            const creature = std.Items.load(curr.id)
+            str += curr.quantity + " "
+            str += creature.Name.enGB.get() + ", "
+            quest.Objectives.Item.add(curr.id, curr.quantity)
+        })
+        str += `then return to ${questgiver.Name.enGB.get()}.`
+        quest.ObjectiveText.enGB.set(str)
+    }
+    setObjectives()
+    return quest
+}
+
+export const QuestCreator = {
+    createKillingQuest,
+    createCollectQuest,
 }

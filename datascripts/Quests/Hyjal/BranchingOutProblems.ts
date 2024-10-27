@@ -1,8 +1,9 @@
 import { std } from "wow/wotlk"
-import { createKillingQuest, AreasID } from "../Utils/KillingQuest"
+import { QuestCreator, AreasID } from "../Utils/QuestCreator"
 import { WELCOME_QUEST } from "./Welcome"
 import { GNOME_WORKSHOP } from "./Welcome"
 import { HYJAL_MAP } from "./Setup/Map"
+
 const name = "HyjalFirstTask"
 
 const CORRUPTED_SYLVAIN = std.CreatureTemplates.create("trevis", name + "Sylvain", 299)
@@ -46,7 +47,7 @@ const POIs = [
     { map: 1, x: 5519.863770, y: -3810.039551, z: 1609.844360, o: 3.418262 },
 ]
 
-export const quest = createKillingQuest("Branching Out Problems", GNOME_WORKSHOP, [{ id: CORRUPTED_SYLVAIN.ID, quantity: 8 }], 1, AreasID.HYJAL)
+export const quest = QuestCreator.createKillingQuest("Branching Out Problems", GNOME_WORKSHOP, [{ id: CORRUPTED_SYLVAIN.ID, quantity: 8 }], 1, AreasID.HYJAL)
     .PickupText.enGB.set(`Finally, a recruit who's not just here to grab energy!
 Those goblins can hardly see past the gold glint, but we've got some... roots to dig up here.
 

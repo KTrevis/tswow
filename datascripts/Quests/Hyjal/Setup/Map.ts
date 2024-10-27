@@ -1,5 +1,5 @@
 import { std } from "wow/wotlk"
-import { AreasID } from "../../Utils/KillingQuest"
+import { AreasID } from "../../Utils/QuestCreator"
 
 export const HYJAL_MAP = std.WorldMapAreas.create()
 .Map.set(1)

@@ -1,7 +1,7 @@
 import { std } from "wow/wotlk";
 import { GOBLIN_WORKSHOP } from "./Welcome";
 import { quest as branchingOutProblems } from "./BranchingOutProblems"
-import { AreasID } from "../Utils/KillingQuest";
+import { AreasID } from "../Utils/QuestCreator";
 
 const name = "A Little Help from My Frenemies"
 
