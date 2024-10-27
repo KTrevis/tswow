@@ -48,9 +48,7 @@ export const talentPointItem = std.Items.create("trevis", name + " Item", 6948)
     itemSpell.Spell.set(spell.ID)
     .Charges.set(1, "DELETE_ITEM")
 )
-.DisplayInfo.modRefCopy("trevis", "Talent Point Item Icon", (value) => {
-    value.Icon.set("Interface\\Icons\\inv_misc_coin_11")
-})
+.DisplayInfo.modRefCopy("trevis", "Talent Point Item Icon", (value) => value.Icon.set("Interface\\Icons\\inv_misc_coin_11"))
 .RequiredLevel.set(10)
 
 function addTalentPointItemToQuest(id: number) {

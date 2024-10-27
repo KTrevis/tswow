@@ -1,4 +1,5 @@
 import { std } from "wow/wotlk";
+import { AreasID } from "./Quests/Utils/KillingQuest";
 
 const name = "Forbidden Zone"
 
@@ -19,5 +20,20 @@ const spell = std.Spells.create("trevis", name)
     if (application.GetAura().GetDuration() != 0) return
     const player = ToPlayer(effect.GetCaster())
     if (!player || player.IsGM()) return
-    player.Teleport(1, 5495.261719, -3725.772949, 1597.171753, 3.084047)
+    player.Teleport(1, 5496.201172, -3734.774414, 1597.045044, 2.593613)
+})
+
+std.InlineScripts.Player.OnUpdateZone((player: TSPlayer, newZone: number) => {
+    const allowedZones: number[] = [
+        616, // HYJAL
+    ]
+    const aura = UTAG("trevis", "Forbidden zone")
+    if (player.IsGM()) return
+    if (player.HasUnitState(256)) return // this means the player is on a taxi
+    if (allowedZones.includes(newZone))
+        return player.RemoveAura(aura)
+    console.log(`${player.GetName()} entered a forbidden zone: ${newZone}`)
+    if (player.HasAura(aura)) return
+    player.AddAura(aura, player)
+    player.SendAreaTriggerMessage(`You are not allowed to be here. You will be teleported to your faction capital in 10 seconds if you do not leave this zone.`)
 })

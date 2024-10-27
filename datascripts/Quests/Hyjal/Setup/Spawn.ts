@@ -2,7 +2,7 @@ import { std } from "wow/wotlk"
 
 std.Spells.load(42202).delete() // makes hyjal accessible
 
-export const HYJAL_SPAWN = {map:1,x:5496.188965,y:-3734.670898,z:1597.050537,o:2.652516}
+export const HYJAL_SPAWN = {map:1,x:5496.201172,y:-3734.774414,z:1597.045044,o:2.593613}
 
 std.GMTeleports.create()
 .Name.set("spawn")

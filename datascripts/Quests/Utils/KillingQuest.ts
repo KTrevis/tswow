@@ -9,15 +9,26 @@ export interface KillingQuestObjective {
 }
 
 export enum AreasID {
-    ELWYNN = 12,
-    NORTHSHIRE = 9,
-    HYJAL = 616,
     GNOMEREGAN = 721,
+    NORTHSHIRE = 9,
+    STORMWIND = 1519,
+    ELWYNN = 12,
+    ORGRIMMAR = 1637,
+    DUROTAR = 14,
+    DUN_MOROGH = 1,
+    IRONFORGE = 1537,
+    TELDRASSIL = 141,
+    DARNASSUS = 1657,
+    UNDERCITY = 1497,
+    TIRISFAL_GLADES = 85,
+    MULGORE = 215,
+    THUNDER_BLUFF = 1638,
+    DEEPRUN_TRAM = 2257,
+    HYJAL = 616,
 }
 
 export function createKillingQuest(questName: string, questgiver: CreatureTemplate, toKill: KillingQuestObjective[], questLevel: number, AreasID: AreasID): Quest {
     const quest = std.Quests.create("trevis", "KillingQuestCreator" + questName)
-    .PrevQuest.set(0)
     .MinLevel.set(questLevel)
     .QuestLevel.set(questLevel + 1)
     .Questgiver.addCreatureBoth(questgiver.ID, true)
