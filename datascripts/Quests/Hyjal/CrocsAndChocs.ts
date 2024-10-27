@@ -1,6 +1,6 @@
 import { std } from "wow/wotlk";
 import { helpFromMyFremenies, GearmasterGizwizzle } from "./HelpFromMyFremenies";
-import { AreasID } from "../Utils/QuestCreator";
+import { AreasID, QuestCreator } from "../Utils/QuestCreator";
 import { creature_questitemRow } from "wow/wotlk/sql/creature_questitem";
 import { addItemQuestTooltipToCreature } from "../Utils/ItemQuestTooltip";
 import { ItemCreator } from "../Utils/ItemCreator";
@@ -41,15 +41,10 @@ const crocolisk = std.CreatureTemplates.create("trevis", name + "Crocolisk", 311
         { map: 1, x: 5452.302734, y: -3600.858398, z: 1560.570435, o: 3.818799 },
         { map: 1, x: 5416.311523, y: -3618.397461, z: 1560.329834, o: 2.448279 },
     ], spawn => spawn.WanderDistance.set(10))
+crocolisk.NormalLoot.modRefCopy(table => table.addItem(crocImbre.ID, 100, 1, 1, true))
 
-std.Loot.Creature.load(crocolisk.NormalLoot.get()).addItem(crocImbre.ID, 100, 1, 1, true)
-
-export const crocsAndChocs = std.Quests.create("trevis", name + "Quest", 33)
-    .Name.enGB.set(name)
-    .Objectives.Item.mod(0, value => value.Item.set(crocImbre.ID))
-    .Questgiver.addCreatureBoth(GearmasterGizwizzle.ID)
+export const crocsAndChocs = QuestCreator.createCollectQuest(name, GearmasterGizwizzle, [{id: crocImbre.ID, quantity: 8}], 3, AreasID.HYJAL)
     .PrevQuest.set(helpFromMyFremenies.ID)
-    .ObjectiveText.enGB.set(`Find 8 ${crocImbre.Name.enGB.get()}.`)
     .PickupText.enGB.set(`Ah, the World Tree! A majestic place filled with mysteries... and hungry crocodiles!
     
 The goblins and gnomes have tried to uncover the secrets of this energy, but these pesky reptiles have decided to play gatekeepers.
