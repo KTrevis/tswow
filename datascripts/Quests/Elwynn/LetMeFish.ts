@@ -1,8 +1,9 @@
 import { std } from "wow/wotlk";
 import { FactionTemplateValues } from "wow/wotlk/std/Faction/FactionTemplates";
 import { QuestObjective } from "wow/wotlk/std/Quest/QuestObjective";
-import {AreaSort, createKillingQuest, KillingQuestObjective} from "../Utils/KillingQuest";
+import {AreasID, createKillingQuest, KillingQuestObjective} from "../Utils/KillingQuest";
 import { Position } from "wow/wotlk/std/Misc/Position";
+import { HYJAL_MAP } from "../Hyjal/Setup/Setup";
 
 const name = "Let Me Fish!"
 
@@ -19,11 +20,10 @@ const POI: Position[] = [
     {map:0,x:-9401.033203,y:-478.712280,z:71.112885,o:1.307343},
 ]
 
-const quest = createKillingQuest(name, questgiver, toKill, 6, AreaSort.ELWYNN)
-// .POIs.forEach(value => { value.delete() })
-.POIs.add(0, POI)
-.POIs.add(1, POI)
-.POIs.forEach(value => value.WorldMapArea.set(0))
+const quest = createKillingQuest(name, questgiver, toKill, 6, AreasID.ELWYNN)
 .PickupText.enGB.set(`Me and my friend Lee Brown just want to fish, but those stupids Murlocs are scaring the fishes away! 
 Please do something about it, this is our business.`)
 .Rewards.Item.add(4496, 1)
+.POIs.add(0, POI)
+.POIs.add(1, POI)
+.POIs.forEach(value => value.WorldMapArea.set(0))

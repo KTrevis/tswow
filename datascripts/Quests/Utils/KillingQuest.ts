@@ -8,14 +8,15 @@ export interface KillingQuestObjective {
     quantity: number
 }
 
-export enum AreaSort {
+export enum AreasID {
     ELWYNN = 12,
     NORTHSHIRE = 9,
     HYJAL = 616,
+    GNOMEREGAN = 721,
 }
 
-export function createKillingQuest(questName: string, questgiver: CreatureTemplate, toKill: KillingQuestObjective[], questLevel: number, area: AreaSort): Quest {
-    const quest = std.Quests.create("trevis", questName)
+export function createKillingQuest(questName: string, questgiver: CreatureTemplate, toKill: KillingQuestObjective[], questLevel: number, AreasID: AreasID): Quest {
+    const quest = std.Quests.create("trevis", "KillingQuestCreator" + questName)
     .PrevQuest.set(0)
     .MinLevel.set(questLevel)
     .QuestLevel.set(questLevel + 1)
@@ -24,7 +25,7 @@ export function createKillingQuest(questName: string, questgiver: CreatureTempla
     .CompleteLogText.enGB.set(`Return to ${questgiver.Name.enGB.get()}.`)
     .CompleteText.enGB.set("Great job!")
     .Rewards.Difficulty.set(5)
-    .AreaSort.set(area)
+    .AreaSort.set(AreasID)
 
     function setObjectives() {
         let str = "Kill "
