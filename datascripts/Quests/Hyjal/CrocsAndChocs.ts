@@ -43,7 +43,7 @@ const crocolisk = std.CreatureTemplates.create("trevis", name + "Crocolisk", 311
     ], spawn => spawn.WanderDistance.set(10))
 crocolisk.NormalLoot.modRefCopy(table => table.addItem(crocImbre.ID, 100, 1, 1, true))
 
-export const crocsAndChocs = QuestCreator.createCollectQuest(name, GearmasterGizwizzle, [{id: crocImbre.ID, quantity: 8}], 3, AreasID.HYJAL)
+export const crocsAndChocs = QuestCreator.createCollectQuest(name, GearmasterGizwizzle, [{id: crocImbre.ID, quantity: 8}], 2, AreasID.HYJAL)
     .PrevQuest.set(helpFromMyFremenies.ID)
     .PickupText.enGB.set(`Ah, the World Tree! A majestic place filled with mysteries... and hungry crocodiles!
     

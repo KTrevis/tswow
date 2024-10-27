@@ -23,8 +23,9 @@ const shredder = std.CreatureTemplates.create("trevis", name + "Shredder", 27883
 .MovementType.RANDOM_MOVEMENT.set()
 .Name.enGB.set("Shredder")
 .FactionTemplate.NEUTRAL_HOSTILE.set()
+.Stats.HealthMod.set(1)
 
-const powerPlay = QuestCreator.createKillingQuest(name, GearmasterGizwizzle, [{id: shredder.ID, quantity: 8}], 3, AreasID.HYJAL)
+const powerPlay = QuestCreator.createKillingQuest(name, GearmasterGizwizzle, [{id: shredder.ID, quantity: 8}], 2, AreasID.HYJAL)
 .PickupText.enGB.set(`Ah, hello there!
 
 You've arrived just in time! We have constructed a small factory next to the World Tree, eager to harness the immense power left behind by Archimonde.

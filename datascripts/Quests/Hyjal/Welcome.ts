@@ -1,5 +1,5 @@
 import { std } from "wow/wotlk";
-import { AreasID, createKillingQuest } from "../Utils/QuestCreator";
+import { AreasID } from "../Utils/QuestCreator";
 import { HYJAL_MAP } from "./Setup/Map";
 
 const name = "HyjalWelcome"
@@ -16,7 +16,7 @@ export const GOBLIN_WORKSHOP = std.CreatureTemplates.create("trevis", name, 3453
 export const WELCOME_QUEST = std.Quests.create("trevis", name + "Quest")
 .Questgiver.addCreatureStarter(GOBLIN_WORKSHOP.ID)
 .Questgiver.addCreatureEnder(GNOME_WORKSHOP.ID)
-.Name.enGB.set("Welcome to Hyjal!")
+.Name.enGB.set("Welcome to Hyjal !")
 .AreaSort.set(AreasID.HYJAL)
 .CompleteText.enGB.set(`Oh, you're here already? That was… fast.
     

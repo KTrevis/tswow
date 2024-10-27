@@ -6,7 +6,7 @@ import { HYJAL_MAP } from "./Setup/Map"
 
 const name = "HyjalFirstTask"
 
-const CORRUPTED_SYLVAIN = std.CreatureTemplates.create("trevis", name + "Sylvain", 299)
+export const CORRUPTED_TREANT = std.CreatureTemplates.create("trevis", name + "Treant", 299)
     .Level.set(1, 2)
     .Spawns.add("trevis", name + "SylvainSpawn", [
         { map: 1, x: 5542.886719, y: -3801.468018, z: 1606.622925, o: 0.264890 },
@@ -30,24 +30,17 @@ const CORRUPTED_SYLVAIN = std.CreatureTemplates.create("trevis", name + "Sylvain
         { map: 1, x: 5582.085938, y: -3832.343994, z: 1611.076416, o: 3.477169 },
     ])
     .Models.mod(0, ref => ref.set(18922))
-    .Name.enGB.set("Treant")
+    .Name.enGB.set("Corrupted Treant")
     .Type.ELEMENTAL.set()
     .TypeFlags.clearAll()
     .Auras.set('')
 
-CORRUPTED_SYLVAIN.Spawns.get().forEach(value => {
+CORRUPTED_TREANT.Spawns.get().forEach(value => {
     value.WanderDistance.set(10)
     value.MovementType.RANDOM_MOVEMENT.set()
 })
 
-const POIs = [
-    { map: 1, x: 5531.914551, y: -3655.350586, z: 1593.751831, o: 0.001773 },
-    { map: 1, x: 5646.271973, y: -3640.696045, z: 1617.398438, o: 6.041487 },
-    { map: 1, x: 5669.409668, y: -3770.125732, z: 1630.355713, o: 4.780927 },
-    { map: 1, x: 5519.863770, y: -3810.039551, z: 1609.844360, o: 3.418262 },
-]
-
-export const quest = QuestCreator.createKillingQuest("Branching Out Problems", GNOME_WORKSHOP, [{ id: CORRUPTED_SYLVAIN.ID, quantity: 8 }], 1, AreasID.HYJAL)
+export const quest = QuestCreator.createKillingQuest("Branching Out Problems", GNOME_WORKSHOP, [{ id: CORRUPTED_TREANT.ID, quantity: 8 }], 1, AreasID.HYJAL)
     .PickupText.enGB.set(`Finally, a recruit who's not just here to grab energy!
 Those goblins can hardly see past the gold glint, but we've got some... roots to dig up here.
 
@@ -59,7 +52,11 @@ Take a few down so we can get to work without dodging thorny attitudes!`)
     
 Just, uh, keep it under wraps from the goblins, or they'll be selling 'souvenir twigs' before we know it.
 Thanks for the help, recruit!`)
-    .POIs.add(0, POIs)
-    .POIs.add(1, POIs)
+    .POIs.add(0, [
+        { map: 1, x: 5531.914551, y: -3655.350586, z: 1593.751831, o: 0.001773 },
+        { map: 1, x: 5646.271973, y: -3640.696045, z: 1617.398438, o: 6.041487 },
+        { map: 1, x: 5669.409668, y: -3770.125732, z: 1630.355713, o: 4.780927 },
+        { map: 1, x: 5519.863770, y: -3810.039551, z: 1609.844360, o: 3.418262 },
+    ])
     .POIs.forEach(value => value.WorldMapArea.set(HYJAL_MAP.ID))
     .PrevQuest.set(WELCOME_QUEST.ID)
