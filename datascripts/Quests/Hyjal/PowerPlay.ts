@@ -26,7 +26,7 @@ const shredder = std.CreatureTemplates.create("trevis", name + "Shredder", 27883
 
 const powerPlay = QuestCreator.createKillingQuest(name, GearmasterGizwizzle, [{id: shredder.ID, quantity: 8}], 3, AreasID.HYJAL)
 .PickupText.enGB.set(`Ah, hello there!
-    
+
 You've arrived just in time! We have constructed a small factory next to the World Tree, eager to harness the immense power left behind by Archimonde.
 But, oh dear, it seems the goblins have really messed things up! Their machines are malfunctioning all over the place, sending bizarre energy surges that are warping the area.
 

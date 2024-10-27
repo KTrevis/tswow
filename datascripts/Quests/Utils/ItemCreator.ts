@@ -2,7 +2,7 @@ import { std } from "wow/wotlk"
 
 function createBasicItemQuest(name: string, icon: string) {
     const item = std.Items.create("trevis", name + "item")
-    .Name.enGB.set("Croc-imbres")
+    .Name.enGB.set(name)
     .DisplayInfo.setSimpleIcon("trevis", name + "ItemIcon", "Interface\\Icons\\" + icon)
     .Flags.HAS_QUEST_GLOW.set(true)
     .Quality.WHITE.set()
