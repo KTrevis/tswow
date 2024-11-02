@@ -81,7 +81,37 @@ function createCollectQuest(name: string, questgiver: CreatureTemplate, toCollec
     return quest
 }
 
+function createSpeakingQuest(name: string, questgiverStart: CreatureTemplate, questgiverEnd: CreatureTemplate, questLevel: number, area: AreasID): Quest {
+	const quest = std.Quests.create("trevis", "trevisSpeakingquest" + name)
+    .MinLevel.set(questLevel)
+    .QuestLevel.set(questLevel + 1)
+	.Questgiver.addCreatureStarter(questgiverStart.ID)
+	.Questgiver.addCreatureEnder(questgiverEnd.ID, true)
+	.Name.enGB.set(name)
+	.ObjectiveText.enGB.set(`Speak to ${questgiverEnd.Name.enGB.get()}.`)
+	.AreaSort.set(area)
+    .Rewards.Difficulty.set(1)
+
+	questgiverEnd.NPCFlags.QUEST_GIVER.set(true)
+	questgiverStart.NPCFlags.QUEST_GIVER.set(true)
+	return quest
+}
+
+function createInteractQuest(name: string, questgiver: CreatureTemplate, toInteract: ObjectiveQuest[], questLevel: number, area: AreasID): Quest {
+	const quest = std.Quests.create("trevis", "interactquest" + name)
+    .MinLevel.set(questLevel)
+    .QuestLevel.set(questLevel + 1)
+	.Name.enGB.set(name)
+	.Questgiver.addCreatureBoth(questgiver.ID, true)
+	.AreaSort.set(area)
+    .Rewards.Difficulty.set(5)
+	toInteract.forEach(value => quest.Objectives.Entity.add(-value.id, value.quantity))
+	return quest
+}
+
 export const QuestCreator = {
     createKillingQuest,
     createCollectQuest,
+    createSpeakingQuest,
+	createInteractQuest
 }

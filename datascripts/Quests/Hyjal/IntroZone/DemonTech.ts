@@ -6,7 +6,7 @@ import { addItemQuestTooltipToCreature } from "../../Utils/ItemQuestTooltip"
 
 const name = "Demon Tech"
 
-const whirleySparktwist = std.CreatureTemplates.create("trevis", name + "Whirley Sparktwist") // male gnome
+export const whirleySparktwist = std.CreatureTemplates.create("trevis", name + "Whirley Sparktwist") // male gnome
 .Models.addIds(3117)
 .Name.enGB.set("Whirley Sparktwist")
 .Spawns.add("trevis", name + "Whirley Sparktwist Spawn", {map:1,x:5132.416016,y:-3334.420166,z:1638.273071,o:5.452465},)
@@ -21,7 +21,6 @@ wrathguard.NormalLoot.set(table.ID)
 addItemQuestTooltipToCreature(wrathguard.ID, 0, infernalCircuitryComponents.ID)
 netherhound.NormalLoot.set(table.ID)
 addItemQuestTooltipToCreature(netherhound.ID, 0, infernalCircuitryComponents.ID)
-
 
 const quest = QuestCreator.createCollectQuest(name, whirleySparktwist, [{id: infernalCircuitryComponents.ID, quantity: 12}], 4, AreasID.HYJAL)
 .PickupText.enGB.set(`Hi, nice to meet you!

@@ -1,8 +1,8 @@
 import { std } from "wow/wotlk";
-import { AreasID } from "../../Utils/QuestCreator";
+import { AreasID, QuestCreator } from "../../Utils/QuestCreator";
 import { HYJAL_MAP } from "../Setup/Map";
 
-const name = "HyjalWelcome"
+const name = "Welcome To Hyjal"
 
 export const GNOME_WORKSHOP = std.CreatureTemplates.create("trevis", name + "Questgiver", 1269)
 .Spawns.add("trevis", name + "Gnome", {map:1,x:5490.265137,y:-3744.139893,z:1598.955811,o:1.093496},)
@@ -13,11 +13,7 @@ export const GOBLIN_WORKSHOP = std.CreatureTemplates.create("trevis", name, 3453
 .Spawns.add("trevis", name + "Goblin", {map:1,x:5489.537598,y:-3724.523926,z:1596.751709,o:5.189344},)
 .FactionTemplate.NEUTRAL_PASSIVE.set()
 
-export const WELCOME_QUEST = std.Quests.create("trevis", name + "Quest")
-.Questgiver.addCreatureStarter(GOBLIN_WORKSHOP.ID)
-.Questgiver.addCreatureEnder(GNOME_WORKSHOP.ID)
-.Name.enGB.set("Welcome to Hyjal !")
-.AreaSort.set(AreasID.HYJAL)
+export const WELCOME_QUEST = QuestCreator.createSpeakingQuest(name, GOBLIN_WORKSHOP, GNOME_WORKSHOP, 1, AreasID.HYJAL)
 .CompleteText.enGB.set(`Oh, you're here already? That was… fast.
     
 You must be a natural at running around talking to people. Well, someone's gotta do it, and it's certainly not going to be me.

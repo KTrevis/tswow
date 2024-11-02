@@ -48,7 +48,7 @@ const object = std.GameObjectTemplates.Chests.create("trevis", name + "Chest")
         { map: 1, x: 5614.079590, y: -3459.169922, z: 1592.276489, o: 5.405364 },
         { map: 1, x: 5598.054199, y: -3483.450684, z: 1592.235474, o: 4.211559 },
 
-    ])
+    ], 30)
     .Loot.modRef(table => table.addItem(robotPart.ID, 100, 1, 1))
     .Flags.CONDITIONAL_SELECT.set(true)
     .IsConsumable.set(1)
