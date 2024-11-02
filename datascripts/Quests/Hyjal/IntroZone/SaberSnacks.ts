@@ -1,8 +1,8 @@
 import { std } from "wow/wotlk"
 import { ItemCreator } from "../../Utils/ItemCreator"
+import { addItemQuestTooltipToCreature } from "../../Utils/ItemQuestTooltip"
 import { AreasID, QuestCreator } from "../../Utils/QuestCreator"
 import { GearmasterGizwizzle } from "./HelpFromMyFremenies"
-import { addItemQuestTooltipToCreature } from "../../Utils/ItemQuestTooltip"
 
 const name = "Saber Snacks"
 
@@ -51,5 +51,4 @@ You've saved the day and our taste buds!`)
         { map: 1, x: 5709.182129, y: -3468.471191, z: 1601.472656, o: 0.653679 },
         { map: 1, x: 5766.827148, y: -3297.857178, z: 1618.272217, o: 1.007108 },
     ])
-    .POIs.forEach(value => value.Map.set(1)
-        .WorldMapArea.set(AreasID.HYJAL))
+    .POIs.forEach(value => value.WorldMapArea.set(AreasID.HYJAL))

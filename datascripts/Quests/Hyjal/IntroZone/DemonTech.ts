@@ -42,5 +42,4 @@ Now, stand back—things are about to get electrifying!`)
     {map:1,x:5359.047363,y:-3447.433594,z:1577.778687,o:5.955123},
     {map:1,x:5324.839355,y:-3518.721924,z:1584.212646,o:4.262593},
     ])
-.POIs.forEach(value => value.Map.set(1)
-    .WorldMapArea.set(AreasID.HYJAL))
+.POIs.forEach(value => value.WorldMapArea.set(AreasID.HYJAL))

@@ -51,5 +51,4 @@ So how about this: you head over to the demon camps nearby and take out some of 
 It'll give us the time we need, and hey, it's not like we're short on demons to clobber!`)
     // .POIs.add(0, [
     // ])
-    .POIs.forEach(value => value.Map.set(1)
-        .WorldMapArea.set(AreasID.HYJAL))
+    .POIs.forEach(value => value.WorldMapArea.set(AreasID.HYJAL))

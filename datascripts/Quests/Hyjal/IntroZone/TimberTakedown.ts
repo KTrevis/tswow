@@ -33,5 +33,6 @@ Thanks for making the most of that treant trouble; now we're in much better shap
     { map: 1, x: 5669.409668, y: -3770.125732, z: 1630.355713, o: 4.780927 },
     { map: 1, x: 5519.863770, y: -3810.039551, z: 1609.844360, o: 3.418262 },
 ])
+.POIs.forEach(value => value.WorldMapArea.set(AreasID.HYJAL))
 
 addItemQuestTooltipToCreature(CORRUPTED_TREANT.ID, 0, wood.ID)

@@ -26,8 +26,5 @@ He's got some high-tech ideas about handling the local wildlife that I, uh, relu
 Don't let his gnome babble throw you off!`)
     .ObjectiveText.enGB.set(`Speak to ${GearmasterGizwizzle.Name.enGB.get()}.`)
     .PrevQuest.set(branchingOutProblems.ID)
-    .POIs.forEach(value => {
-        value.WorldMapArea.set(AreasID.HYJAL)
-        value.Map.set(1)
-    })
+    .POIs.forEach(value => value.WorldMapArea.set(AreasID.HYJAL))
     .AreaSort.set(AreasID.HYJAL)

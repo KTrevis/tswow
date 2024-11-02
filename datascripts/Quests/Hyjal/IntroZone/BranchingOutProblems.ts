@@ -56,5 +56,5 @@ Thanks for the help, recruit!`)
         { map: 1, x: 5669.409668, y: -3770.125732, z: 1630.355713, o: 4.780927 },
         { map: 1, x: 5519.863770, y: -3810.039551, z: 1609.844360, o: 3.418262 },
     ])
-    .POIs.forEach(value => value.WorldMapArea.set(HYJAL_MAP.ID))
+    .POIs.forEach(value => value.WorldMapArea.set(AreasID.HYJAL))
     .PrevQuest.set(WELCOME_QUEST.ID)

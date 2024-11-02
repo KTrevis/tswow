@@ -1,9 +1,8 @@
 import { std } from "wow/wotlk";
-import { helpFromMyFremenies, GearmasterGizwizzle } from "./HelpFromMyFremenies";
-import { AreasID, QuestCreator } from "../../Utils/QuestCreator";
-import { creature_questitemRow } from "wow/wotlk/sql/creature_questitem";
-import { addItemQuestTooltipToCreature } from "../../Utils/ItemQuestTooltip";
 import { ItemCreator } from "../../Utils/ItemCreator";
+import { addItemQuestTooltipToCreature } from "../../Utils/ItemQuestTooltip";
+import { AreasID, QuestCreator } from "../../Utils/QuestCreator";
+import { GearmasterGizwizzle, helpFromMyFremenies } from "./HelpFromMyFremenies";
 
 const name = "Crocs and Chocs"
 
@@ -72,10 +71,7 @@ Either way, you've proven that not even crocodiles can stop the determination of
         { map: 1, x: 5361.490723, y: -3568.422852, z: 1584.017456, o: 4.439283 },
         { map: 1, x: 5433.708984, y: -3650.525146, z: 1588.555786, o: 5.982573 },
     ])
-    .POIs.forEach(value => {
-        value.WorldMapArea.set(AreasID.HYJAL)
-            .Map.set(1)
-    })
+	.POIs.forEach(value => value.WorldMapArea.set(AreasID.HYJAL))
     .QuestLevel.set(3)
 
 addItemQuestTooltipToCreature(crocolisk.ID, 0, crocImbre.ID)
