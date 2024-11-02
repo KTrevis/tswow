@@ -1,6 +1,6 @@
 import { std } from "wow/wotlk";
-import { AreasID } from "../Utils/QuestCreator";
-import { HYJAL_MAP } from "./Setup/Map";
+import { AreasID } from "../../Utils/QuestCreator";
+import { HYJAL_MAP } from "../Setup/Map";
 
 const name = "HyjalWelcome"
 

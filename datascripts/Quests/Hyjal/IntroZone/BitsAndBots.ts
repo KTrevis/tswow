@@ -1,14 +1,14 @@
 import { std } from "wow/wotlk"
-import { ItemCreator } from "../Utils/ItemCreator"
-import { QuestCreator } from "../Utils/QuestCreator"
+import { ItemCreator } from "../../Utils/ItemCreator"
+import { QuestCreator } from "../../Utils/QuestCreator"
 import { GearmasterGizwizzle } from "./HelpFromMyFremenies"
-import { AreasID } from "../Utils/QuestCreator"
+import { AreasID } from "../../Utils/QuestCreator"
 
 const name = "The Great Robot Runaway"
 
 const robotPart = ItemCreator.createBasicItemQuest("Abandoned Robot Part", "inv_misc_gear_01")
 
-const bitsAndBots = QuestCreator.createCollectQuest(name, GearmasterGizwizzle, [{ id: robotPart.ID, quantity: 6 }], 2, AreasID.HYJAL)
+const bitsAndBots = QuestCreator.createCollectQuest(name, GearmasterGizwizzle, [{ id: robotPart.ID, quantity: 6 }], 3, AreasID.HYJAL)
     .PickupText.enGB.set(`Oh, thank goodness you're here! 
 
 We've had a bit of a disaster at the factory. Our robots started malfunctioning, sparking and clanking all over the place!

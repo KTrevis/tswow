@@ -1,16 +1,15 @@
 import { std } from "wow/wotlk";
 import { helpFromMyFremenies, GearmasterGizwizzle } from "./HelpFromMyFremenies";
-import { AreasID, QuestCreator } from "../Utils/QuestCreator";
+import { AreasID, QuestCreator } from "../../Utils/QuestCreator";
 import { creature_questitemRow } from "wow/wotlk/sql/creature_questitem";
-import { addItemQuestTooltipToCreature } from "../Utils/ItemQuestTooltip";
-import { ItemCreator } from "../Utils/ItemCreator";
+import { addItemQuestTooltipToCreature } from "../../Utils/ItemQuestTooltip";
+import { ItemCreator } from "../../Utils/ItemCreator";
 
 const name = "Crocs and Chocs"
 
 const crocImbre = ItemCreator.createBasicItemQuest("Croc-imbres", "inv_misc_monsterfang_02")
 
 const crocolisk = std.CreatureTemplates.create("trevis", name + "Crocolisk", 3110)
-    .MovementType.RANDOM_MOVEMENT.set()
     .Level.set(2, 3)
     .Spawns.add("trevis", name + "Mob", [
         { map: 1, x: 5478.243652, y: -3576.353271, z: 1559.312012, o: 0.418051 },
@@ -40,7 +39,16 @@ const crocolisk = std.CreatureTemplates.create("trevis", name + "Crocolisk", 311
         { map: 1, x: 5493.217285, y: -3567.960938, z: 1560.095581, o: 3.818799 },
         { map: 1, x: 5452.302734, y: -3600.858398, z: 1560.570435, o: 3.818799 },
         { map: 1, x: 5416.311523, y: -3618.397461, z: 1560.329834, o: 2.448279 },
-    ], spawn => spawn.WanderDistance.set(10))
+        {map:1,x:5511.793457,y:-3558.503418,z:1560.636963,o:1.258443},
+        {map:1,x:5487.956543,y:-3429.143555,z:1559.018677,o:3.858112},
+        {map:1,x:5439.286133,y:-3434.881836,z:1562.334961,o:4.392184},
+        {map:1,x:5417.736816,y:-3439.601562,z:1559.802734,o:3.638203},
+        {map:1,x:5381.013672,y:-3492.494141,z:1560.422852,o:4.443240},
+])
+.Spawns.forEach(value =>
+    value.MovementType.RANDOM_MOVEMENT.set()
+    .WanderDistance.set(10)
+)
 crocolisk.NormalLoot.modRefCopy(table => table.addItem(crocImbre.ID, 100, 1, 1, true))
 
 export const crocsAndChocs = QuestCreator.createCollectQuest(name, GearmasterGizwizzle, [{id: crocImbre.ID, quantity: 8}], 2, AreasID.HYJAL)
@@ -64,7 +72,6 @@ Either way, you've proven that not even crocodiles can stop the determination of
         { map: 1, x: 5361.490723, y: -3568.422852, z: 1584.017456, o: 4.439283 },
         { map: 1, x: 5433.708984, y: -3650.525146, z: 1588.555786, o: 5.982573 },
     ])
-    .AreaSort.set(AreasID.HYJAL)
     .POIs.forEach(value => {
         value.WorldMapArea.set(AreasID.HYJAL)
             .Map.set(1)

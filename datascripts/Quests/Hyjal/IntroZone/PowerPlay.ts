@@ -1,13 +1,20 @@
 import { std } from "wow/wotlk";
-import { AreasID, QuestCreator } from "../Utils/QuestCreator";
+import { AreasID, QuestCreator } from "../../Utils/QuestCreator";
 import { GearmasterGizwizzle } from "./HelpFromMyFremenies";
 
 // kill 5 malfunctioning machines
 
 const name = "Power Play"
 
+const overloadPrime = std.CreatureTemplates.create("trevis", name + "OverloadPrime", 27883)
+.Name.enGB.set("Overload Prime")
+.Spawns.add("trevis", name + "OverloadPrimeSpawn", {map:1,x:5583.669434,y:-3444.049072,z:1606.502686,o:0.088209},)
+.FactionTemplate.NEUTRAL_HOSTILE.set()
+.Level.set(10)
+
 const shredder = std.CreatureTemplates.create("trevis", name + "Shredder", 27883)
 .Level.set(3, 4)
+.MovementType.RANDOM_MOVEMENT.set()
 .Spawns.add("trevis", name + "ShredderSpawn", [
     {map:1,x:5618.284180,y:-3480.855713,z:1592.057007,o:2.676078},
     {map:1,x:5596.601562,y:-3474.481934,z:1592.276367,o:1.333048},
@@ -19,13 +26,15 @@ const shredder = std.CreatureTemplates.create("trevis", name + "Shredder", 27883
     {map:1,x:5598.268555,y:-3463.975098,z:1605.668335,o:6.265348},
     {map:1,x:5622.619629,y:-3462.088623,z:1605.471558,o:0.233489},
     {map:1,x:5625.562988,y:-3440.031494,z:1605.668579,o:2.856720},    
-], spawn => spawn.WanderDistance.set(10))
-.MovementType.RANDOM_MOVEMENT.set()
+], spawn => 
+    spawn.MovementType.RANDOM_MOVEMENT.set()
+    .WanderDistance.set(10)
+)
 .Name.enGB.set("Shredder")
 .FactionTemplate.NEUTRAL_HOSTILE.set()
 .Stats.HealthMod.set(1)
 
-const powerPlay = QuestCreator.createKillingQuest(name, GearmasterGizwizzle, [{id: shredder.ID, quantity: 8}], 2, AreasID.HYJAL)
+const powerPlay = QuestCreator.createKillingQuest(name, GearmasterGizwizzle, [{id: shredder.ID, quantity: 8}], 3, AreasID.HYJAL)
 .PickupText.enGB.set(`Ah, hello there!
 
 You've arrived just in time! We have constructed a small factory next to the World Tree, eager to harness the immense power left behind by Archimonde.

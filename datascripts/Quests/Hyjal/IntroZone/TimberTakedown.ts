@@ -1,9 +1,9 @@
 import { std } from "wow/wotlk";
 import { CORRUPTED_TREANT } from "./BranchingOutProblems";
-import { GOBLIN_WORKSHOP, WELCOME_QUEST } from "./Welcome";
-import { ItemCreator } from "../Utils/ItemCreator";
-import { AreasID, QuestCreator } from "../Utils/QuestCreator";
-import { addItemQuestTooltipToCreature } from "../Utils/ItemQuestTooltip";
+import { GOBLIN_WORKSHOP, WELCOME_QUEST } from "./WelcomeToHyjal";
+import { ItemCreator } from "../../Utils/ItemCreator";
+import { AreasID, QuestCreator } from "../../Utils/QuestCreator";
+import { addItemQuestTooltipToCreature } from "../../Utils/ItemQuestTooltip";
 
 const name = "Timber Takedown"
 

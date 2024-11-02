@@ -1,8 +1,8 @@
 import { std } from "wow/wotlk"
-import { QuestCreator, AreasID } from "../Utils/QuestCreator"
-import { WELCOME_QUEST } from "./Welcome"
-import { GNOME_WORKSHOP } from "./Welcome"
-import { HYJAL_MAP } from "./Setup/Map"
+import { QuestCreator, AreasID } from "../../Utils/QuestCreator"
+import { WELCOME_QUEST } from "./WelcomeToHyjal"
+import { GNOME_WORKSHOP } from "./WelcomeToHyjal"
+import { HYJAL_MAP } from "../Setup/Map"
 
 const name = "HyjalFirstTask"
 
@@ -28,17 +28,15 @@ export const CORRUPTED_TREANT = std.CreatureTemplates.create("trevis", name + "T
         { map: 1, x: 5590.018555, y: -3787.176758, z: 1611.457275, o: 4.686677 },
         { map: 1, x: 5589.568359, y: -3804.671143, z: 1612.476318, o: 4.686677 },
         { map: 1, x: 5582.085938, y: -3832.343994, z: 1611.076416, o: 3.477169 },
-    ])
+    ], spawn => 
+        spawn.MovementType.RANDOM_MOVEMENT.set()
+        .WanderDistance.set(10)
+    )
     .Models.mod(0, ref => ref.set(18922))
     .Name.enGB.set("Corrupted Treant")
     .Type.ELEMENTAL.set()
     .TypeFlags.clearAll()
     .Auras.set('')
-
-CORRUPTED_TREANT.Spawns.get().forEach(value => {
-    value.WanderDistance.set(10)
-    value.MovementType.RANDOM_MOVEMENT.set()
-})
 
 export const quest = QuestCreator.createKillingQuest("Branching Out Problems", GNOME_WORKSHOP, [{ id: CORRUPTED_TREANT.ID, quantity: 8 }], 1, AreasID.HYJAL)
     .PickupText.enGB.set(`Finally, a recruit who's not just here to grab energy!
