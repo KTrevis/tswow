@@ -43,7 +43,7 @@ export const quest = QuestCreator.createKillingQuest("Branching Out Problems", G
 Those goblins can hardly see past the gold glint, but we've got some... roots to dig up here.
 
 The corrupted treants around Nordrassil—forest spirits with a serious attitude problem—have become downright nasty.
-We suspect they've had a bit too much of that magical residue left from Archimonde's "grand finale." 
+We suspect they've had a bit too much of that magical residue left from Archimonde's "grand finale".
 
 Take a few down so we can get to work without dodging thorny attitudes!`)
     .CompleteText.enGB.set(`Excellent! With those cranky sylvans out of the way, we can finally dig a little deeper into what's going on here.
