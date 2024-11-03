@@ -29,6 +29,7 @@ const shredder = std.CreatureTemplates.create("trevis", name + "Shredder", 27883
 ], spawn => 
     spawn.MovementType.RANDOM_MOVEMENT.set()
     .WanderDistance.set(10)
+	.SpawnTime.set(30)
 )
 .Name.enGB.set("Shredder")
 .FactionTemplate.NEUTRAL_HOSTILE.set()

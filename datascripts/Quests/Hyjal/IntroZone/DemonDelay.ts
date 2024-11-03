@@ -49,6 +49,9 @@ const demonDelay = QuestCreator.createKillingQuest(name, krixieKlankbolt, [{ id:
 Those Legion demons creeping up on us are getting bolder, and Whirley and I need more time to finish this machine to zap them out of here for good!
 So how about this: you head over to the demon camps nearby and take out some of those fiends.
 It'll give us the time we need, and hey, it's not like we're short on demons to clobber!`)
-    // .POIs.add(0, [
-    // ])
-    .POIs.forEach(value => value.WorldMapArea.set(AreasID.HYJAL))
+.POIs.add(0, [
+    {map:1,x:5242.865723,y:-3413.852295,z:1579.837646,o:6.265349},
+    {map:1,x:5359.047363,y:-3447.433594,z:1577.778687,o:5.955123},
+    {map:1,x:5324.839355,y:-3518.721924,z:1584.212646,o:4.262593},
+    ])
+.POIs.forEach(value => value.WorldMapArea.set(AreasID.HYJAL))
