@@ -4,15 +4,6 @@ import { AreasID, QuestCreator } from "../../Utils/QuestCreator";
 
 const name = "Sabotage In The Shadows"
 
-// const lock = std.Locks.create("trevis", "BasicLock")
-
-// const unlockSpell = std.Spells.create("trevis", name + "Unlock")
-// .Effects.addMod(eff => {
-// 	eff.Type.OPEN_LOCK.set()
-// 	.LockType.set(lock.ID)
-// })
-// .Tags.addUnique("trevis", "UnlockSpell")
-
 const generator = std.GameObjectTemplates.Goobers.create("trevis", "GeneratorTemplate" + name)
 	.Display.set(6706)
 	.Spawns.add("trevis", name + "generatorspawn", [
@@ -40,5 +31,6 @@ Head out there, disable those generators, and send those demons back where they 
 	.CompleteText.enGB.set(`Ha! That should slow 'em down!
 Taking out those generators will cut their portal capacity, which means fewer demons to deal with.
 Nicely done! Now that we've put a dent in their operations, let's see what else we can mess with.`)
+.ObjectiveText.enGB.set(`Destroy 2 Fel Generators.`)
 
 generator.Quest.set(quest.ID)

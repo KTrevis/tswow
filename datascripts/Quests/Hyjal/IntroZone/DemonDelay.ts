@@ -24,6 +24,7 @@ export const wrathguard = std.CreatureTemplates.create("trevis", name + "Wrath G
     .Spawns.forEach(value => value.MovementType.RANDOM_MOVEMENT.set()
         .WanderDistance.set(10))
     .Stats.set(1, 1, 1, 1, 1)
+	.Scale.set(0.8)
 
 export const netherhound = std.CreatureTemplates.create("trevis", name + "netherhound", 16950)
     .Level.set(4, 5)
@@ -42,6 +43,7 @@ export const netherhound = std.CreatureTemplates.create("trevis", name + "nether
     .Spawns.forEach(value => value.MovementType.RANDOM_MOVEMENT.set()
         .WanderDistance.set(10))
     .Stats.set(1, 1, 1, 1, 1)
+	.Scale.set(0.7)
 
 const demonDelay = QuestCreator.createKillingQuest(name, krixieKlankbolt, [{ id: wrathguard.ID, quantity: 8 }], 4, AreasID.HYJAL)
     .PickupText.enGB.set(`Hey, it's Krixie here, and we've hit a bit of a timing issue.
