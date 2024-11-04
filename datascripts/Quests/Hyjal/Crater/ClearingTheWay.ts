@@ -26,10 +26,28 @@ const felguard = std.CreatureTemplates.create("trevis", name + "Felguard", 6115)
 		{ map: 1, x: 5598.097656, y: -3112.623535, z: 1568.516113, o: 0.033252 },
 		{ map: 1, x: 5667.072266, y: -3066.318359, z: 1562.867310, o: 5.334691 },
 		{ map: 1, x: 5703.168945, y: -3071.157715, z: 1564.615112, o: 0.422030 },
+		{ map: 1, x: 5698.085449, y: -3047.458740, z: 1562.398560, o: 2.899960 },
+		{ map: 1, x: 5621.475586, y: -3052.072754, z: 1556.419678, o: 3.673578 },
+		{ map: 1, x: 5586.202148, y: -3059.028809, z: 1561.609619, o: 0.700840 },
+		{ map: 1, x: 5590.125488, y: -3004.021484, z: 1552.636597, o: 0.535906 },
+		{ map: 1, x: 5716.992188, y: -3036.500488, z: 1562.476440, o: 4.777052 },
 	])
 	.Spawns.forEach(value => value.
 		MovementType.RANDOM_MOVEMENT.set()
 		.WanderDistance.set(10)
 	)
+	.Stats.set(1, 1, 1, 1, 1)
+	.FactionTemplate.NEUTRAL_HOSTILE.set()
 
 const quest = QuestCreator.createKillingQuest(name, questgiver, [{ objective: felguard, quantity: 8 },], 5, AreasID.HYJAL)
+	.PickupText.enGB.set(`Alright, now that we know where those Fel Generators are, there's one small problem—they're crawling with demons!
+Those fiends are stationed around each portal, ready to fry anyone who gets close. If we're gonna sabotage those generators, we'll need you to clear out the guards first.
+Take down those demons near the portals so we can safely move in and shut them off. Keep your wits about you—these aren't your everyday imps!`)
+.CompleteText.enGB.set(`Now that's how you clean house!
+
+With those demons out of the way, we'll be able to get up close to those generators without a fight breaking out.
+You're making this look easy, but don't get too comfortable—there's still plenty more Legion to deal with.
+
+Nice work, adventurer!`)
+.POIs.add(0, [{map:1,x:5627.694824,y:-3001.700195,z:1597.499634,o:5.680238},])
+.POIs.forEach(value => value.WorldMapArea.set(AreasID.HYJAL))

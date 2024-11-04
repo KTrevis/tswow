@@ -47,6 +47,7 @@ function createKillingQuest(questName: string, questgiver: CreatureTemplate, toK
         toKill.forEach((curr, index) => {
             str += curr.quantity + " "
             str += curr.objective.Name.enGB.get() + ", "
+			quest.Objectives.Entity.add(curr.objective.ID, curr.quantity)
         })
         str += `then return to ${questgiver.Name.enGB.get()}.`
         quest.ObjectiveText.enGB.set(str)
