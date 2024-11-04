@@ -2,9 +2,12 @@ import { CreatureTemplate } from "wow/wotlk/std/Creature/CreatureTemplate";
 import { std } from "wow/wotlk";
 import { Quest } from "wow/wotlk/std/Quest/Quest";
 import { Position } from "wow/wotlk/std/Misc/Position";
+import { ItemTemplate } from "wow/wotlk/std/Item/ItemTemplate";
+import { MainEntityID } from "wow/wotlk/std/Misc/Entity";
+import { GameObjectGoober } from "wow/wotlk/std/GameObject/GameObjectTemplate";
 
-export interface ObjectiveQuest {
-    id: number,
+export interface ObjectiveQuest<TObjective> {
+    objective: TObjective,
     quantity: number
 }
 
@@ -27,7 +30,7 @@ export enum AreasID {
     HYJAL = 616,
 }
 
-function createKillingQuest(questName: string, questgiver: CreatureTemplate, toKill: ObjectiveQuest[], questLevel: number, area: AreasID): Quest {
+function createKillingQuest(questName: string, questgiver: CreatureTemplate, toKill: ObjectiveQuest<CreatureTemplate>[], questLevel: number, area: AreasID): Quest {
     const quest = std.Quests.create("trevis", "KillingQuestCreator" + questName)
     .MinLevel.set(questLevel)
     .QuestLevel.set(questLevel + 1)
@@ -42,10 +45,8 @@ function createKillingQuest(questName: string, questgiver: CreatureTemplate, toK
         let str = "Kill "
 
         toKill.forEach((curr, index) => {
-            const creature = std.CreatureTemplates.load(curr.id)
             str += curr.quantity + " "
-            str += creature.Name.enGB.get() + ", "
-            quest.Objectives.Entity.add(curr.id, curr.quantity)
+            str += curr.objective.Name.enGB.get() + ", "
         })
         str += `then return to ${questgiver.Name.enGB.get()}.`
         quest.ObjectiveText.enGB.set(str)
@@ -54,7 +55,7 @@ function createKillingQuest(questName: string, questgiver: CreatureTemplate, toK
     return quest
 }
 
-function createCollectQuest(name: string, questgiver: CreatureTemplate, toCollect: ObjectiveQuest[], questLevel: number, area: AreasID) {
+function createCollectQuest(name: string, questgiver: CreatureTemplate, toCollect: ObjectiveQuest<ItemTemplate>[], questLevel: number, area: AreasID) {
     const quest = std.Quests.create("trevis", "KillingQuestCreator" + name)
     .MinLevel.set(questLevel)
     .QuestLevel.set(questLevel + 1)
@@ -69,10 +70,8 @@ function createCollectQuest(name: string, questgiver: CreatureTemplate, toCollec
         let str = "Collect "
 
         toCollect.forEach((curr, index) => {
-            const creature = std.Items.load(curr.id)
             str += curr.quantity + " "
-            str += creature.Name.enGB.get() + ", "
-            quest.Objectives.Item.add(curr.id, curr.quantity)
+            str += curr.objective.Name.enGB.get() + ", "
         })
         str += `then return to ${questgiver.Name.enGB.get()}.`
         quest.ObjectiveText.enGB.set(str)
@@ -97,7 +96,7 @@ function createSpeakingQuest(name: string, questgiverStart: CreatureTemplate, qu
 	return quest
 }
 
-function createInteractQuest(name: string, questgiver: CreatureTemplate, toInteract: ObjectiveQuest[], questLevel: number, area: AreasID): Quest {
+function createInteractQuest(name: string, questgiver: CreatureTemplate, toInteract: ObjectiveQuest<GameObjectGoober>[], questLevel: number, area: AreasID): Quest {
 	const quest = std.Quests.create("trevis", "interactquest" + name)
     .MinLevel.set(questLevel)
     .QuestLevel.set(questLevel + 1)
@@ -105,7 +104,7 @@ function createInteractQuest(name: string, questgiver: CreatureTemplate, toInter
 	.Questgiver.addCreatureBoth(questgiver.ID, true)
 	.AreaSort.set(area)
     .Rewards.Difficulty.set(5)
-	toInteract.forEach(value => quest.Objectives.Entity.add(-value.id, value.quantity))
+	toInteract.forEach(value => quest.Objectives.Entity.add(-value.objective.ID, value.quantity))
 	return quest
 }
 

@@ -34,7 +34,7 @@ const nightsaber = std.CreatureTemplates.create("trevis", name + "Nightsaber", 2
 
 addItemQuestTooltipToCreature(nightsaber.ID, 0, meat.ID)
 
-const saberSnack = QuestCreator.createCollectQuest(name, GearmasterGizwizzle, [{ id: meat.ID, quantity: 8 }], 3, AreasID.HYJAL)
+const saberSnack = QuestCreator.createCollectQuest(name, GearmasterGizwizzle, [{ objective: meat, quantity: 8 }], 3, AreasID.HYJAL)
     .PickupText.enGB.set(`Hey there, friend!
     
 We're in a bit of a... food crisis up here on top of Mount Hyjal.

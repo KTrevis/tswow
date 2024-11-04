@@ -1,0 +1,35 @@
+import { std } from "wow/wotlk";
+import { AreasID, QuestCreator } from "../../Utils/QuestCreator";
+import { NPCCreator } from "../../Utils/NPCCreator";
+
+const name = "Clearing The Way"
+const questgiver = std.CreatureTemplates.create("trevis", name + "QuestGiver")
+	.Name.enGB.set("Gromtak Bloodshout")
+	.Spawns.add("trevis", name + "Gromtak BloodshoutSpawn", [{ map: 1, x: 5404.433594, y: -3181.781006, z: 1579.929688, o: 0.123543 },])
+	.NPCFlags.QUEST_GIVER.set(true)
+	.Models.get(0).set(14415)
+
+const felguard = std.CreatureTemplates.create("trevis", name + "Felguard", 6115)
+	.Level.set(5, 6)
+	.Spawns.add("trevis", name + "FelguardSpawns", [
+		{ map: 1, x: 5721.267090, y: -3001.313477, z: 1560.895508, o: 3.398689 },
+		{ map: 1, x: 5687.881836, y: -2989.418213, z: 1558.963013, o: 3.481156 },
+		{ map: 1, x: 5665.866699, y: -3012.063965, z: 1560.151489, o: 3.653940 },
+		{ map: 1, x: 5633.884766, y: -3011.611572, z: 1560.144287, o: 2.546528 },
+		{ map: 1, x: 5626.958984, y: -2987.525146, z: 1558.895874, o: 1.124957 },
+		{ map: 1, x: 5657.826660, y: -2971.054688, z: 1550.492798, o: 1.081760 },
+		{ map: 1, x: 5609.285645, y: -2959.638672, z: 1542.782227, o: 3.013841 },
+		{ map: 1, x: 5556.919922, y: -2965.388672, z: 1543.839478, o: 4.101617 },
+		{ map: 1, x: 5570.137207, y: -3005.459473, z: 1553.149292, o: 5.256150 },
+		{ map: 1, x: 5572.557617, y: -3040.865479, z: 1557.812622, o: 4.871309 },
+		{ map: 1, x: 5566.670410, y: -3087.898438, z: 1564.344360, o: 4.360802 },
+		{ map: 1, x: 5598.097656, y: -3112.623535, z: 1568.516113, o: 0.033252 },
+		{ map: 1, x: 5667.072266, y: -3066.318359, z: 1562.867310, o: 5.334691 },
+		{ map: 1, x: 5703.168945, y: -3071.157715, z: 1564.615112, o: 0.422030 },
+	])
+	.Spawns.forEach(value => value.
+		MovementType.RANDOM_MOVEMENT.set()
+		.WanderDistance.set(10)
+	)
+
+const quest = QuestCreator.createKillingQuest(name, questgiver, [{ objective: felguard, quantity: 8 },], 5, AreasID.HYJAL)

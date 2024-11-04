@@ -38,7 +38,7 @@ export const CORRUPTED_TREANT = std.CreatureTemplates.create("trevis", name + "T
     .TypeFlags.clearAll()
     .Auras.set('')
 
-export const quest = QuestCreator.createKillingQuest("Branching Out Problems", GNOME_WORKSHOP, [{ id: CORRUPTED_TREANT.ID, quantity: 8 }], 1, AreasID.HYJAL)
+export const quest = QuestCreator.createKillingQuest("Branching Out Problems", GNOME_WORKSHOP, [{ objective: CORRUPTED_TREANT, quantity: 8 }], 1, AreasID.HYJAL)
     .PickupText.enGB.set(`Finally, a recruit who's not just here to grab energy!
 Those goblins can hardly see past the gold glint, but we've got some... roots to dig up here.
 

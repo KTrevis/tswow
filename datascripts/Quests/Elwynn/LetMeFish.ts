@@ -1,13 +1,14 @@
 import { std } from "wow/wotlk";
 import {AreasID, QuestCreator, ObjectiveQuest} from "../Utils/QuestCreator";
 import { Position } from "wow/wotlk/std/Misc/Position";
+import { CreatureTemplate } from "wow/wotlk/std/Creature/CreatureTemplate";
 
 const name = "Let Me Fish!"
 
 const questgiver = std.CreatureTemplates.load(383)
-const toKill: ObjectiveQuest[] = [
-    {id: 735, quantity: 6},
-    {id: 285, quantity: 6},
+const objectives: ObjectiveQuest<CreatureTemplate>[] = [
+    {objective: std.CreatureTemplates.load(735), quantity: 6},
+    {objective: std.CreatureTemplates.load(285), quantity: 6},
 ]
 
 const POI: Position[] = [
@@ -17,7 +18,7 @@ const POI: Position[] = [
     {map:0,x:-9401.033203,y:-478.712280,z:71.112885,o:1.307343},
 ]
 
-const quest = QuestCreator.createKillingQuest(name, questgiver, toKill, 6, AreasID.ELWYNN)
+const quest = QuestCreator.createKillingQuest(name, questgiver, objectives, 6, AreasID.ELWYNN)
 .PickupText.enGB.set(`Me and my friend Lee Brown just want to fish, but those stupids Murlocs are scaring the fishes away! 
 Please do something about it, this is our business.`)
 .Rewards.Item.add(4496, 1)

@@ -45,7 +45,7 @@ export const netherhound = std.CreatureTemplates.create("trevis", name + "nether
     .Stats.set(1, 1, 1, 1, 1)
 	.Scale.set(0.7)
 
-const demonDelay = QuestCreator.createKillingQuest(name, krixieKlankbolt, [{ id: wrathguard.ID, quantity: 8 }], 4, AreasID.HYJAL)
+const demonDelay = QuestCreator.createKillingQuest(name, krixieKlankbolt, [{ objective: wrathguard, quantity: 8 }], 4, AreasID.HYJAL)
     .PickupText.enGB.set(`Hey, it's Krixie here, and we've hit a bit of a timing issue.
     
 Those Legion demons creeping up on us are getting bolder, and Whirley and I need more time to finish this machine to zap them out of here for good!

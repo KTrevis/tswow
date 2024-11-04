@@ -22,7 +22,7 @@ addItemQuestTooltipToCreature(wrathguard.ID, 0, infernalCircuitryComponents.ID)
 netherhound.NormalLoot.set(table.ID)
 addItemQuestTooltipToCreature(netherhound.ID, 0, infernalCircuitryComponents.ID)
 
-const quest = QuestCreator.createCollectQuest(name, whirleySparktwist, [{id: infernalCircuitryComponents.ID, quantity: 12}], 4, AreasID.HYJAL)
+const quest = QuestCreator.createCollectQuest(name, whirleySparktwist, [{objective: infernalCircuitryComponents, quantity: 12}], 4, AreasID.HYJAL)
 .PickupText.enGB.set(`Hi, nice to meet you!
     
 Krixie and I were just brainstorming, and it hit us—those demons are dragging around some fascinating tech!

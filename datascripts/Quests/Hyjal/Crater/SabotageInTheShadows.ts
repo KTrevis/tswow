@@ -20,7 +20,7 @@ const generator = std.GameObjectTemplates.Goobers.create("trevis", "GeneratorTem
 	.Consumable.set(1)
 	.Lock.set(43)
 
-export const quest = QuestCreator.createInteractQuest(name, zevrinRustwhistle, [{ id: generator.ID, quantity: 2 }], 5, AreasID.HYJAL)
+export const quest = QuestCreator.createInteractQuest(name, zevrinRustwhistle, [{ objective: generator, quantity: 2 }], 5, AreasID.HYJAL)
 	.PickupText.enGB.set(`Finally! With all these demons around, I could use an extra pair of hands.
 
 Listen up: the Legion's got portals and fel machinery set up all over the crater, reinforcing their ranks faster than we can fight them.

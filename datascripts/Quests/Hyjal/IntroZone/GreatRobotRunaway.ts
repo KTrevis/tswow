@@ -8,7 +8,7 @@ const name = "The Great Robot Runaway"
 
 const robotPart = ItemCreator.createBasicItemQuest("Abandoned Robot Part", "inv_misc_gear_01")
 
-const bitsAndBots = QuestCreator.createCollectQuest(name, GearmasterGizwizzle, [{ id: robotPart.ID, quantity: 6 }], 3, AreasID.HYJAL)
+const bitsAndBots = QuestCreator.createCollectQuest(name, GearmasterGizwizzle, [{ objective: robotPart, quantity: 6 }], 3, AreasID.HYJAL)
     .PickupText.enGB.set(`Oh, thank goodness you're here! 
 
 We've had a bit of a disaster at the factory. Our robots started malfunctioning, sparking and clanking all over the place!

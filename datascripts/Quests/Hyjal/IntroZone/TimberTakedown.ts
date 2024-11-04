@@ -13,7 +13,7 @@ const treantTable = std.Loot.Creature.create()
 .addItem(wood.ID, 100, 1, 1, true)
 CORRUPTED_TREANT.NormalLoot.set(treantTable.ID)
 
-const timberTakedown = QuestCreator.createCollectQuest(name, GOBLIN_WORKSHOP, [{id: wood.ID, quantity: 8}], 1, AreasID.HYJAL)
+const timberTakedown = QuestCreator.createCollectQuest(name, GOBLIN_WORKSHOP, [{objective: wood, quantity: 8}], 1, AreasID.HYJAL)
     .PickupText.enGB.set(`So, I heard you've already got a job to take out some pesky treants for that gnome technician?
 
 Perfect! While you're at it, how about gathering some wood from those treants?

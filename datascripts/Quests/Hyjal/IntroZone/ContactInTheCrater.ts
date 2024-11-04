@@ -5,7 +5,7 @@ import { AreasID, QuestCreator } from "../../Utils/QuestCreator"
 
 const name = "Contact In The Crater"
 
-export const zevrinRustwhistle = NPCCreator.createNPC("Zevrin Rustwhitstle", [{map:1,x:5405.902832,y:-3190.366211,z:1578.844116,o:1.741494},])
+export const zevrinRustwhistle = NPCCreator.createNPC("Zevrin Rustwhitstle", [{map:1,x:5409.562988,y:-3181.318848,z:1580.059692,o:3.045231},])
 	.Models.addIds(5567)
 	.NPCFlags.QUEST_GIVER.set(true)
 	.FactionTemplate.NEUTRAL_PASSIVE.set()
