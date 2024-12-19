@@ -1,8 +1,6 @@
 # Build/Garbage
 build/
 DBFilesClient/
-global.d.ts
-tsconfig.json
 Crashes/
 logs/
 Server.log

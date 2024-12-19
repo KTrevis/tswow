@@ -1,6 +1,6 @@
 import { std } from "wow/wotlk"
 
-const name = "Elderforge"
+const name = "Pathfinder"
 
 // const categories = [
 // 	92, //  General
@@ -11,7 +11,6 @@ const name = "Elderforge"
 // 	169, //  Professions
 // 	201, //  Reputation
 // 	155, //  World Events
-// 	elderforgeAchievements.ID,
 // 	81, //  Feats of Strength
 // 	// 1, //  Statistics
 // ]
