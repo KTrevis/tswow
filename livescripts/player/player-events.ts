@@ -10,7 +10,12 @@ function onLevelChanged(player: TSPlayer, oldLevel: uint8) {
   learnSpells(player);
 }
 
+function onLogin(player: TSPlayer, firstLogin: boolean) {
+  levelCap(player);
+}
+
 export function playerEvents(events: TSEvents) {
   events.Player.OnLevelChanged(onLevelChanged);
+  events.Player.OnLogin(onLogin);
   events.Player.OnReload(onReload);
 }
