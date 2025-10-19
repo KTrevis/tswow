@@ -1,14 +1,7 @@
-import { std } from "wow/wotlk";
-import { MODULE_NAME } from "../utils/constants";
+import { DBC } from "wow/wotlk";
 
-const dungeons = std.Maps.queryAll({
-  InstanceType: 1,
-});
+const lfgDungeons = DBC.LfgDungeons.queryAll({});
 
-for (const [i, dungeon] of dungeons.entries()) {
-  dungeon.Type.DUNGEON.set(MODULE_NAME, `remove-lfg-${i}`).LFGDungeons.forEach(
-    (value) => {
-      value.delete();
-    }
-  );
+for (const lfg of lfgDungeons) {
+  lfg.MinLevel.set(255);
 }

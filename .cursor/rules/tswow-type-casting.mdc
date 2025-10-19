@@ -1,0 +1,34 @@
+---
+globs: *.ts
+description: TSWoW type casting syntax
+---
+
+# TSWoW Type Casting
+
+In TSWoW TypeScript, use angle bracket syntax for type casting:
+
+## Float Casting
+
+To cast to float, use `<float>` before the value:
+
+```typescript
+const result = <float>integerValue / (<float>MAX_LEVEL * 2);
+```
+
+This is necessary when working with uint8, uint32, and other integer types to ensure floating-point division instead of integer division.
+
+## Common Use Cases
+
+- Division operations that need decimal results
+- Preventing integer division from rounding to 0
+- Mathematical calculations requiring precision
+
+## Example
+
+```typescript
+// Wrong: integer division results in 0
+const levelScaling = 1 + averageLevel / (MAX_LEVEL * 2); // Always 1
+
+// Correct: float casting gives proper decimal result
+const levelScaling = 1 + <float>averageLevel / (<float>MAX_LEVEL * 2); // e.g., 1.35
+```
