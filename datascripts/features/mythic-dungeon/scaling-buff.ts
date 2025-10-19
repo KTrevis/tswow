@@ -14,4 +14,5 @@ export const MYTHIC_DUNGEON_SCALING_BUFF = std.Spells.create(
   .Stacks.set(1000)
   .Duration.set(INFINITE_DURATION_ID)
   .AuraDescription.enGB.set("Increases damage and health by $s1%.")
-  .Tags.addUnique(MODULE_NAME, "mythic-dungeon-scaling-buff");
+  .Tags.addUnique(MODULE_NAME, "mythic-dungeon-scaling-buff")
+  .Icon.setPath("achievement_boss_lordmarrowgar");
