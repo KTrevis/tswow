@@ -1,4 +1,10 @@
 <details>
+    <summary>Global changes</summary>
+    <ul>
+        <li>LFG is disabled.</li>
+    </ul>
+</details>
+<details>
     <summary>Class changes</summary>
         <i>Shaman</i>
         <ul>

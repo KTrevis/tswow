@@ -1,3 +1,4 @@
+import { MAX_LEVEL } from "../player/level-change/level-cap";
 import { MAX_GOSSIP_MENU_ITEMS } from "../utils/constants";
 import { UTAGS } from "../utils/utag";
 import { calculateReward } from "./calculate-reward";
@@ -17,9 +18,10 @@ function onGossipHello(
 
   for (let i: uint8 = 0; i < MAX_GOSSIP_MENU_ITEMS; i += 1) {
     const difficulty = i + 1;
+
     player.GossipMenuAddItem(
       GossipOptionIcon.CHAT,
-      `+${difficulty} ${calculateReward(difficulty)}`,
+      `+${difficulty} (Currency: ${calculateReward(difficulty)})`,
       0,
       difficulty
     );
@@ -41,6 +43,7 @@ function onGossipSelect(
 
   for (const creature of creatures) {
     creature.RemoveAura(UTAGS.MYTHIC_DUNGEON_SCALING_BUFF);
+
     for (let i = 0; i < difficulty * 10; i += 1) {
       creature.AddAura(UTAGS.MYTHIC_DUNGEON_SCALING_BUFF, creature);
     }
