@@ -31,7 +31,10 @@ function onGossipHello(
     );
   }
 
-  player.GossipSendTextMenu(creature, "Select your difficulty.");
+  player.GossipSendTextMenu(
+    creature,
+    "Select your difficulty. Each difficulty increases damage and health of every enemy by 10%. The higher the difficulty, the bigger the reward."
+  );
 }
 
 function onGossipSelect(
@@ -51,7 +54,7 @@ function onGossipSelect(
   for (const creature of creatures) {
     creature.RemoveAura(UTAGS.MYTHIC_DUNGEON_SCALING_BUFF);
 
-    for (let i = 0; i < difficulty * 10; i += 1) {
+    for (let i = 0; i < difficulty; i += 1) {
       creature.AddAura(UTAGS.MYTHIC_DUNGEON_SCALING_BUFF, creature);
     }
   }
