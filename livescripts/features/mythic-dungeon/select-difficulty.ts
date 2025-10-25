@@ -1,6 +1,6 @@
-import { MAX_LEVEL } from "../player/level-change/level-cap";
-import { MAX_GOSSIP_MENU_ITEMS } from "../utils/constants";
-import { UTAGS } from "../utils/utag";
+
+import { MAX_GOSSIP_MENU_ITEMS } from "../../utils/constants";
+import { UTAGS } from "../../utils/utag";
 import { calculateReward } from "./calculate-reward";
 
 function onGossipHello(

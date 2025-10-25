@@ -1,4 +1,4 @@
-import { MAX_LEVEL } from "../player/level-change/level-cap";
+import { MAX_LEVEL } from "../../player/level-change/level-cap";
 
 export function calculateReward(
   difficulty: uint8,
