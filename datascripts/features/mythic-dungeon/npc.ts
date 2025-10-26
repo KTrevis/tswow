@@ -14,5 +14,5 @@ const MYTHIC_DUNGEON_NPC = std.CreatureTemplates.create(
   "mythic-dungeon-npc",
   24369
 )
-  .Spawns.add(MODULE_NAME, "mythic-dungeon-npc-spawns", [RAGEFIRE_CHASM])
+  .Spawns.add(MODULE_NAME, "mythic-dungeon-npc-spawns", [])
   .Tags.addUnique(MODULE_NAME, "mythic-dungeon-npc");
