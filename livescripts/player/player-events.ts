@@ -7,7 +7,7 @@ function onReload(player: TSPlayer, firstLogin: boolean) {
 
 function onLevelChanged(player: TSPlayer, oldLevel: uint8) {
   levelCap(player);
-  learnSpells(player);
+  // learnSpells(player);
 }
 
 function onLogin(player: TSPlayer, firstLogin: boolean) {
