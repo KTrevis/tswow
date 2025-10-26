@@ -34,6 +34,8 @@ const SPAWNS = [
   { map: 0, x: 1656.171631, y: 1684.373291, z: 120.718842, o: 6.195381 }, // tirisfal
   { map: 1, x: -605.991211, y: -4248.711426, z: 38.95631, o: 3.098237 }, // durotar
   { map: 1, x: -2910.163574, y: -252.80246, z: 52.939739, o: 3.102943 }, // mulgore
+  { map: 530, x: 10354.779297, y: -6363.519531, z: 34.956062, o: 3.169588 }, // eversong woods
+  { map: 530, x: -3965.388672, y: -13924.483398, z: 100.978096, o: 4.518246 }, // azuremyst isle
 ];
 
 const HARDCORE_NPC = std.CreatureTemplates.create(
