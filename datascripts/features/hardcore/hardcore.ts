@@ -13,7 +13,7 @@ const HARDCORE_AURA = std.Spells.create(MODULE_NAME, "hardcore-aura")
       return;
     }
     SendWorldMessage(
-      `${player.GetName()} just died at level ${player.GetLevel()}`
+      `${player.GetName()} just died at level ${<int>player.GetLevel()}`
     );
     const GHOST_AURA = 8326;
     player.ResurrectPlayer(100, false);
