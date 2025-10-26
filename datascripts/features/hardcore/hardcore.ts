@@ -12,9 +12,6 @@ const HARDCORE_AURA = std.Spells.create(MODULE_NAME, "hardcore-aura")
     if (!player) {
       return;
     }
-    SendWorldMessage(
-      `${player.GetName()} just died at level ${<int>player.GetLevel()}`
-    );
     const GHOST_AURA = 8326;
     player.ResurrectPlayer(100, false);
     player.AddTimer(1000, 1, 0, (owner, timer) => {
