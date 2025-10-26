@@ -23,5 +23,5 @@ export function levelCap(player: TSPlayer) {
   } else {
     unblockPlayerXP(player);
   }
-  applyXPDebuff(player);
+  // applyXPDebuff(player);
 }
