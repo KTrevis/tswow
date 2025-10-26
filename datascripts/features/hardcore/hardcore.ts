@@ -1,5 +1,6 @@
 import { std } from "wow/wotlk";
 import { INFINITE_DURATION_ID, MODULE_NAME } from "../../utils/constants";
+import { ClassIDs } from "wow/wotlk/std/Class/ClassIDs";
 
 const HARDCORE_AURA = std.Spells.create(MODULE_NAME, "hardcore-aura")
   .Icon.setPath("inv_misc_bone_humanskull_01")
@@ -11,6 +12,9 @@ const HARDCORE_AURA = std.Spells.create(MODULE_NAME, "hardcore-aura")
     if (!player) {
       return;
     }
+    SendWorldMessage(
+      `${player.GetName()} just died at level ${player.GetLevel()}`
+    );
     const GHOST_AURA = 8326;
     player.ResurrectPlayer(100, false);
     player.AddTimer(1000, 1, 0, (owner, timer) => {
