@@ -43,4 +43,5 @@ const HARDCORE_NPC = std.CreatureTemplates.create(
 )
   .NPCFlags.GOSSIP.set(true)
   .Spawns.add(MODULE_NAME, "hardcore-npc-spawns", SPAWNS)
-  .Tags.addUnique(MODULE_NAME, "hardcore-npc");
+  .Tags.addUnique(MODULE_NAME, "hardcore-npc")
+  .Subname.enGB.set("Hardcore Enjoyer");
