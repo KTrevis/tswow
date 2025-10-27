@@ -7,7 +7,6 @@ export function hardcore(events: TSEvents) {
   hardcoreAura(events);
   events.Unit.OnDeathEarly((dying, killer) => {
     const player = ToPlayer(dying);
-    console.log(dying.GetName());
 
     if (!player || !player.HasAura(UTAGS.HARDCORE_AURA)) {
       return;

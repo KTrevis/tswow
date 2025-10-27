@@ -12,6 +12,9 @@ function onLevelChanged(player: TSPlayer, oldLevel: uint8) {
 
 function onLogin(player: TSPlayer, firstLogin: boolean) {
   levelCap(player);
+  player.SendBroadcastMessage(
+    "Type /join world in the chat if you want to speak with other players"
+  );
 }
 
 export function playerEvents(events: TSEvents) {
