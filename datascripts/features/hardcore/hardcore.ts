@@ -7,21 +7,6 @@ const HARDCORE_AURA = std.Spells.create(MODULE_NAME, "hardcore-aura")
   .Name.enGB.set("Hardcore")
   .AuraDescription.enGB.set("You are in hardcore mode.")
   .Duration.set(INFINITE_DURATION_ID)
-  .InlineScripts.OnRemove((effect, application, type) => {
-    const player = ToPlayer(application.GetTarget());
-    if (!player) {
-      return;
-    }
-    const GHOST_AURA = 8326;
-    player.ResurrectPlayer(100, false);
-    player.AddTimer(1000, 1, 0, (owner, timer) => {
-      const player = ToPlayer(owner);
-      if (!player) {
-        return;
-      }
-      player.AddAura(8326, player);
-    });
-  })
   .Tags.addUnique(MODULE_NAME, "hardcore-aura")
   .Effects.addMod((eff) =>
     eff.Type.APPLY_AURA.set().Aura.DUMMY.set().ImplicitTargetA.UNIT_CASTER.set()
