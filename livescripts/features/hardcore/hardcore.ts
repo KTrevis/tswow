@@ -10,7 +10,7 @@ export function hardcore(events: TSEvents) {
       return;
     }
     SendWorldMessage(
-      `${player.GetName()} just died at level ${<int>player.GetLevel()}`
+      `${player.GetName()} just died at level ${<int>player.GetLevel()}.`
     );
   });
 }

@@ -37,7 +37,7 @@ Do you want to become a mortal?
 
 WARNING:
 - Once you turned on hardcore mode on a character, you cannot go back.
-- Any death is definitive, even if it happened because of a bug.
+- Your character becomes softcore when it dies, even if it happened because of a bug.
 - Once you get above level 1 you cannot turn on hardcore mode anymore.`
   );
 }
