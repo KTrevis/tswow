@@ -1,4 +1,4 @@
-import { HARDCORE_DISCORD_WEBHOOK } from "../../utils/constants";
+import { BACKEND_URL } from "../../utils/constants";
 import { UTAGS } from "../../utils/utag";
 import { hardcoreNPC } from "./npc";
 
@@ -14,8 +14,8 @@ export function hardcore(events: TSEvents) {
       player.GetLevel()
     )}.`;
     SendWorldMessage(message);
-    const req = new XMLHttpRequest();
-    req.open("POST", HARDCORE_DISCORD_WEBHOOK);
-    req.send(`{"content": "${message}"}`);
+    SyncHttpGet(
+      `${BACKEND_URL}/api/hardcore/death?player=${player.GetName()}&level=${player.GetLevel()}`
+    );
   });
 }
