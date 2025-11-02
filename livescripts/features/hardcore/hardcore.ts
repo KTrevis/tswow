@@ -15,7 +15,9 @@ export function hardcore(events: TSEvents) {
     )}.`;
     SendWorldMessage(message);
     SyncHttpGet(
-      `${BACKEND_URL}/api/hardcore/death?player=${player.GetName()}&level=${player.GetLevel()}`
+      `${BACKEND_URL}/api/hardcore/death?player=${player.GetName()}&level=${<
+        int
+      >player.GetLevel()}`
     );
   });
 }
