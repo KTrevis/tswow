@@ -18,8 +18,11 @@ services:
       - mysql-data:/var/lib/mysql
     networks:
       - tswow
+    ports:
+      - "127.0.0.1:3306:3306"
 
   tswow:
+    container_name: tswow
     image: ghcr.io/ktrevis/tswow:${TSWOW_IMAGE_TAG:-latest}
     build:
       context: .
