@@ -10,7 +10,7 @@ import { BuildCommand, CleanCommand, ListCommand } from "./CommandActions";
 import { Dataset } from "./Dataset";
 import { Identifier } from "./Identifiers";
 import { Module, ModuleEndpoint } from "./Modules";
-import { NodeExecutable, NpmExecutable, NpxExecutable } from "./Node";
+import { NodeExecutable, NpmExecutable } from "./Node";
 import { NodeConfig } from "./NodeConfig";
 
 /**
@@ -183,9 +183,10 @@ export class Datascripts {
         this.path.swcrc.writeJson(datascripts_swcrc)
         try {
             term.debug('datascripts', `Compiling datascripts at ${this.path.abs().get()}`)
+            const swc = ipaths.node_modules.join('@swc/cli/bin/swc.js').abs().get();
             wsys.execIn(
                 this.path.dirname().get()
-                , `${NpxExecutable} swc datascripts -d datascripts/build --sync`,'inherit'
+                , `"${NodeExecutable}" "${swc}" datascripts -d datascripts/build --sync`,'inherit'
             )
         } catch(err) {
             this.path.swcrc.remove();
@@ -197,7 +198,11 @@ export class Datascripts {
     compileTypes(declare: boolean) {
         term.log(this.logName(),`Compiling types for ${this.path}`)
         try {
-            wsys.execIn(this.path.get(),`${NpxExecutable} tsc`,'inherit');
+            wsys.execIn(
+                this.path.get()
+                , `"${NodeExecutable}" "${ipaths.node_modules.typescript_js.abs().get()}"`
+                , 'inherit'
+            );
         } catch(error) {
             // error printed by tsc
         }

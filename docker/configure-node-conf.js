@@ -25,6 +25,7 @@ const database = [
 const settings = new Map([
   ['Default.Client', JSON.stringify(process.env.TSWOW_CLIENT_PATH || '/client')],
   ['AutoStart.Client', '0'],
+  ['Launcher.Port', process.env.TSWOW_LAUNCHER_PORT || '3726'],
   ['Database.HostedPort', '0'],
   ['Database.WorldSource', JSON.stringify(database)],
   ['Database.WorldDest', JSON.stringify(database)],

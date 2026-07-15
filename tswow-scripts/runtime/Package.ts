@@ -1,4 +1,3 @@
-import * as crypto from 'crypto';
 import * as fs from 'fs';
 import * as path from 'path';
 import { commands } from "../util/Commands";
@@ -13,19 +12,14 @@ import { Datascripts } from "./Datascripts";
 import { Dataset } from "./Dataset";
 import { Identifier } from "./Identifiers";
 import { NodeConfig } from "./NodeConfig";
-
-export interface PackageMeta {
-    size: number;
-    md5s: string[];
-    filename: string;
-    chunkSize: number;
-}
+import { hashLauncherFile, LauncherFile, LauncherManifest, LAUNCHER_SCHEMA_VERSION } from './LauncherProtocol';
 
 export class Package {
     static async packageClient(dataset: Dataset, fullDBC: boolean, fullInterface: boolean, folder: boolean) {
         term.log('client', `Packaging client for ${dataset.name}`)
         await Datascripts.build(dataset,['--no-shutdown']);
         await Addon.build(dataset);
+        await dataset.client.applyExePatches();
 
         // Step 1: Resolve mappings
         let mapstr: [string,string[]][] = dataset.config.PackageMapping
@@ -103,11 +97,13 @@ export class Package {
             if (node.basename().get().startsWith(dataset.fullName)) node.remove();
         });
 
-        let metas: PackageMeta[] = [];
+        const launcherFiles: LauncherFile[] = [];
+        const chunkSize = NodeConfig.LauncherPatchChunkSize;
         term.debug('client', `Packaging ${Object.keys(entriesByMpq).length} MPQ(s)`);
         for (const [mpq, entries] of Object.entries(entriesByMpq)) {
             term.debug('client', `Packaging ${mpq}`);
-            const packageFile = ipaths.package.file(`${dataset.fullName}.${mpq}`);
+            const patchName = mpq.replace(/\.mpq$/i, '');
+            const packageFile = ipaths.package.file(`${dataset.fullName}.${patchName}`);
             const listfilePath = ipaths.bin.package.file(packageFile.get());
             const listfileContent = entries.map(e => `${e.src}\t${e.dst}`).join('\n') + (entries.length ? '\n' : '');
             listfilePath.write(listfileContent);
@@ -117,6 +113,17 @@ export class Package {
                 `"${ipaths.bin.mpqbuilder.mpqbuilder_exe.get()}" "${listfilePath.abs().get()}" "${packageFile.abs().get()}"`,
                 'inherit'
             );
+
+            const destination = dataset.config.ClientPatchUseLocale
+                ? `Data/${dataset.client.locale()}/patch-${dataset.client.locale()}-${patchName}.MPQ`
+                : `Data/patch-${patchName}.MPQ`;
+            launcherFiles.push(hashLauncherFile(
+                `mpq-${patchName.toLowerCase()}`,
+                packageFile.basename().get(),
+                destination,
+                packageFile.abs().get(),
+                chunkSize
+            ));
 
             if (folder) {
                 // Mirror layout into a folder (same hierarchy as MPQ / build-data patches) when explicitly requested.
@@ -130,24 +137,29 @@ export class Package {
                 }
             }
 
-            const chunkSize = NodeConfig.LauncherPatchChunkSize;
-            const meta: PackageMeta = { md5s: [], size: wfs.stat(packageFile).size, filename: packageFile.basename().get(), chunkSize };
-            metas.push(meta);
-
-            const handle = fs.openSync(resfp(packageFile), 'r');
-            try {
-                const buf = Buffer.alloc(chunkSize);
-                while (true) {
-                    const nread = fs.readSync(handle, buf, 0, chunkSize, null);
-                    if (nread === 0) break;
-                    meta.md5s.push(crypto.createHash('md5').update(nread < chunkSize ? buf.slice(0, nread) : buf).digest('hex'));
-                }
-            } finally {
-                fs.closeSync(handle);
-            }
         }
-        if(metas.length > 0) {
-            ipaths.package.join(`${dataset.fullName}.meta.json`).toFile().writeJson(metas)
+
+        ipaths.package.mkdir();
+        const wowFilename = `${dataset.fullName}.Wow.exe`;
+        const wowPackagePath = path.join(resfp(ipaths.package), wowFilename);
+        fs.copyFileSync(dataset.client.path.wow_exe.get(), wowPackagePath);
+        launcherFiles.push(hashLauncherFile(
+            'wow-exe',
+            wowFilename,
+            'Wow.exe',
+            wowPackagePath,
+            chunkSize
+        ));
+
+        if(launcherFiles.length > 0) {
+            const manifest: LauncherManifest = {
+                schemaVersion: LAUNCHER_SCHEMA_VERSION,
+                dataset: dataset.fullName,
+                generatedAt: new Date().toISOString(),
+                chunkSize,
+                files: launcherFiles,
+            };
+            ipaths.package.join(`${dataset.fullName}.meta.json`).toFile().writeJson(manifest)
         }
     }
 

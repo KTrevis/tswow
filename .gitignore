@@ -16,6 +16,12 @@ Thumbs.db
 
 # NodeJS
 /node_modules/
+/launcher/node_modules/
+/launcher/out/
+/launcher/dist/
+/launcher/*.js
+/launcher/*.d.ts
+/launcher/*.tsbuildinfo
 /package-lock.json
 
 # Configuration files

@@ -1,0 +1,46 @@
+{
+  "name": "nikev-launcher",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Portable TSWoW launcher for the Nikev dataset",
+  "main": "out/main/index.js",
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "typecheck": "tsc --noEmit -p tsconfig.node.json && tsc --noEmit -p tsconfig.web.json",
+    "test": "vitest run src/main/patch-engine.test.ts",
+    "dist:win": "npm run build && electron-builder --win zip --x64"
+  },
+  "dependencies": {
+    "react": "19.2.7",
+    "react-dom": "19.2.7"
+  },
+  "devDependencies": {
+    "@types/node": "26.1.1",
+    "@types/react": "19.2.17",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "5.2.0",
+    "electron": "43.1.1",
+    "electron-builder": "26.15.3",
+    "electron-vite": "5.0.0",
+    "typescript": "5.9.3",
+    "vite": "7.3.6",
+    "vitest": "4.1.10"
+  },
+  "build": {
+    "appId": "dev.tswow.nikev.launcher",
+    "productName": "Nikev Launcher",
+    "files": [
+      "out/**/*"
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": [
+        "zip"
+      ],
+      "artifactName": "Nikev-Launcher-${version}-win-x64.${ext}"
+    }
+  }
+}
