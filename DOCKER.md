@@ -59,7 +59,61 @@ docker attach tswow-tswow-1
 
 Detach without stopping it with `Ctrl-p`, then `Ctrl-q`.
 
-## Building core changes
+## Modifying TSWoW itself
+
+TSWoW's own source lives in the parent repository. Edit it normally, then
+commit it from the repository root:
+
+```bash
+git switch master
+git add <changed-files>
+git commit -m "Describe the TSWoW change"
+git push origin master
+```
+
+Rebuild the image to compile and package the new source revision:
+
+```bash
+docker build --platform linux/amd64 \
+  --build-arg TSWOW_REVISION="$(git rev-parse HEAD)" \
+  --build-arg TRINITYCORE_REVISION="$(git -C cores/TrinityCore rev-parse HEAD)" \
+  --tag ghcr.io/ktrevis/tswow:local .
+docker compose up -d --no-build --force-recreate tswow
+```
+
+Docker reuses cached layers when possible. A change to TSWoW source can still
+invalidate the main build layer, so expect a real rebuild after source changes.
+Running `docker compose up -d --no-build` at any other time never compiles.
+
+## Modifying TrinityCore
+
+The TrinityCore fork is the `cores/TrinityCore` Git submodule. Commit and push
+core changes from inside that directory first, then commit the updated submodule
+pointer in the parent TSWoW repository:
+
+```bash
+cd cores/TrinityCore
+git switch ktrevis
+git add .
+git commit -m "Describe the core change"
+git push origin ktrevis
+cd ../..
+git add cores/TrinityCore
+git commit -m "chore: update TrinityCore"
+git push
+```
+
+The parent commit does not duplicate the core source: it records the exact
+TrinityCore commit that belongs to that TSWoW revision. This makes builds
+reproducible. Never update the submodule to an arbitrary upstream commit without
+checking that TSWoW is compatible with it.
+
+After committing both repositories, run the same `docker build` and
+`docker compose up` commands from the previous section. A core change recompiles
+TrinityCore inside the image; the host and deployment server still need only
+Docker.
+
+## Deploying a prebuilt image
 
 Push changes to `master`. The `Docker image` GitHub Actions workflow compiles
 the complete fork and publishes these tags:
@@ -71,7 +125,7 @@ Deploy the new image on the server with:
 
 ```bash
 docker compose pull tswow
-docker compose up -d tswow
+docker compose up -d --no-build tswow
 ```
 
 No compiler or TSWoW source tree is needed outside the container.
@@ -81,7 +135,10 @@ No compiler or TSWoW source tree is needed outside the container.
 The upstream build is resource-intensive. To build it locally anyway:
 
 ```bash
-docker compose build tswow
+docker build --platform linux/amd64 \
+  --build-arg TSWOW_REVISION="$(git rev-parse HEAD)" \
+  --build-arg TRINITYCORE_REVISION="$(git -C cores/TrinityCore rev-parse HEAD)" \
+  --tag ghcr.io/ktrevis/tswow:local .
 ```
 
 On Apple Silicon this uses x86 emulation because the initial image target is

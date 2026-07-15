@@ -20,6 +20,8 @@ Thumbs.db
 
 # Configuration files
 /build.conf
+/.env
+/runtime/
 
 # Logs
 /log.txt

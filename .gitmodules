@@ -1,7 +1,7 @@
 [submodule "TrinityCore"]
 	path = cores/TrinityCore
-	url = https://github.com/tswow/TrinityCore.git
-	branch = tswow
+	url = https://github.com/KTrevis/TrinityCore.git
+	branch = ktrevis
 [submodule "misc/adt-creator"]
 	path = misc/adt-creator
 	url = https://github.com/tswow/adt-creator.git

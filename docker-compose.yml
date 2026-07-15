@@ -37,6 +37,7 @@ services:
       TSWOW_DB_USER: root
       TSWOW_DB_PASSWORD: ${TSWOW_DB_PASSWORD:?Set TSWOW_DB_PASSWORD in .env}
       TSWOW_CLIENT_PATH: /client
+      LD_LIBRARY_PATH: /opt/tswow/install/bin/trinitycore/RelWithDebInfo:/opt/tswow/install/bin/libraries/RelWithDebInfo
     ports:
       - "3724:3724"
       - "8085:8085"

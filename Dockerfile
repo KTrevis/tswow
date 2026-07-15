@@ -75,7 +75,8 @@ ENV TSWOW_INSTALL_DIR=/opt/tswow/install \
     TSWOW_CLIENT_PATH=/client \
     TSWOW_DB_HOST=mysql \
     TSWOW_DB_PORT=3306 \
-    TSWOW_DB_USER=root
+    TSWOW_DB_USER=root \
+    LD_LIBRARY_PATH=/opt/tswow/install/bin/trinitycore/RelWithDebInfo:/opt/tswow/install/bin/libraries/RelWithDebInfo
 
 WORKDIR /opt/tswow/install
 
