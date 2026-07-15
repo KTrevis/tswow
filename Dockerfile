@@ -41,6 +41,7 @@ COPY . .
 
 RUN test -f cores/TrinityCore/CMakeLists.txt \
     && test -f misc/adt-creator/CMakeLists.txt \
+    && rm -f cores/TrinityCore/.git misc/adt-creator/.git \
     && git init \
     && git config user.email docker@localhost \
     && git config user.name Docker \
