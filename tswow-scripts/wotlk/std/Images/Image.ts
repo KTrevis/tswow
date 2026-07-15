@@ -68,7 +68,7 @@ export class TSImage {
         return this;
     }
 
-    write(pathIn: string, format: ExportFormat = 'PNG+BLP') {
+    async write(pathIn: string, format: ExportFormat = 'PNG+BLP') {
         let pathRaw = pathIn;
         if(pathIn.toLowerCase().endsWith('.blp') || pathIn.toLowerCase().endsWith('.png')) {
             pathRaw = pathIn.substring(0,pathIn.length-4);
@@ -77,22 +77,42 @@ export class TSImage {
         if(!fs.existsSync(dir)) {
             fs.mkdirSync(dir,{recursive:true});
         }
-        let pathPng = pathRaw+'.png';
-        let pathBlp = pathRaw+'.blp';
-        if(fs.existsSync(pathBlp)) {
-            fs.rmSync(pathBlp);
+        const pathPng = pathRaw+'.png';
+        const pathBlp = pathRaw+'.blp';
+        const temporaryRaw = `${pathRaw}.${process.pid}.${Date.now()}`;
+        const temporaryPng = temporaryRaw+'.png';
+        const temporaryBlp = temporaryRaw+'.blp';
+
+        try {
+            await pureimage.encodePNGToStream(
+                this.bitmap,
+                fs.createWriteStream(temporaryPng),
+            );
+
+            if(format !== 'PNG') {
+                child_process.execSync(
+                    `"${ipaths.bin.BLPConverter.blpconverter.get()}" "${temporaryPng}"`
+                )
+                fs.copyFileSync(temporaryBlp,pathBlp);
+            }
+
+            if(format !== 'BLP') {
+                fs.copyFileSync(temporaryPng,pathPng);
+            } else if(fs.existsSync(pathPng)) {
+                fs.rmSync(pathPng);
+            }
+
+            if(format === 'PNG' && fs.existsSync(pathBlp)) {
+                fs.rmSync(pathBlp);
+            }
+        } finally {
+            if(fs.existsSync(temporaryPng)) {
+                fs.rmSync(temporaryPng);
+            }
+            if(fs.existsSync(temporaryBlp)) {
+                fs.rmSync(temporaryBlp);
+            }
         }
-        return pureimage.encodePNGToStream(this.bitmap,fs.createWriteStream(pathPng))
-            .then(()=>{
-                if(format !== 'PNG') {
-                    child_process.execSync(
-                        `"${ipaths.bin.BLPConverter.blpconverter.get()}" ${pathPng}`
-                    )
-                    if(format !== 'PNG+BLP') {
-                        fs.rmSync(pathPng);
-                    }
-                }
-        });
     }
 
     writeToModule(mod: string, localPath: string, format: ExportFormat = 'PNG+BLP') {

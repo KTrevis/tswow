@@ -110,7 +110,7 @@ finish('finish', ()=> {
     }
 })
 
-luaxml('build-class-icons',()=>{
+luaxml('build-class-icons',async ()=>{
     if(!hasStitched || !BuildArgs.WRITE_CLIENT) return;
     if(stitchedSquares===undefined || stitchedCircles === undefined) {
         if(!setupImages()) {
@@ -118,7 +118,7 @@ luaxml('build-class-icons',()=>{
         }
     }
 
-    stitchedSquares?.write(dataset.luaxml.join(SQUARES_LOCAL).get(),'PNG+BLP')
-    stitchedCircles?.write(dataset.luaxml.join(CIRCLES_LOCAL).get(),'PNG+BLP')
-    stitchedWorldstates?.write(dataset.luaxml.join(WORLDSTATE_LOCAL).get(),'PNG+BLP')
+    await stitchedSquares?.write(dataset.luaxml.join(SQUARES_LOCAL).get(),'PNG+BLP')
+    await stitchedCircles?.write(dataset.luaxml.join(CIRCLES_LOCAL).get(),'PNG+BLP')
+    await stitchedWorldstates?.write(dataset.luaxml.join(WORLDSTATE_LOCAL).get(),'PNG+BLP')
 })
