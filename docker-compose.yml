@@ -1,0 +1,54 @@
+name: tswow
+
+services:
+  mysql:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${TSWOW_DB_PASSWORD:?Set TSWOW_DB_PASSWORD in .env}
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p$$MYSQL_ROOT_PASSWORD --silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - tswow
+
+  tswow:
+    image: ghcr.io/ktrevis/tswow:${TSWOW_IMAGE_TAG:-latest}
+    build:
+      context: .
+      dockerfile: Dockerfile
+    platform: linux/amd64
+    restart: unless-stopped
+    tty: true
+    stdin_open: true
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      TSWOW_DB_HOST: mysql
+      TSWOW_DB_PORT: 3306
+      TSWOW_DB_USER: root
+      TSWOW_DB_PASSWORD: ${TSWOW_DB_PASSWORD:?Set TSWOW_DB_PASSWORD in .env}
+      TSWOW_CLIENT_PATH: /client
+    ports:
+      - "3724:3724"
+      - "8085:8085"
+      - "7878:7878"
+    volumes:
+      - ./runtime:/var/lib/tswow
+      - ${WOW_CLIENT_PATH:?Set WOW_CLIENT_PATH in .env}:/client
+    networks:
+      - tswow
+
+volumes:
+  mysql-data:
+
+networks:
+  tswow:

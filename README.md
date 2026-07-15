@@ -1,5 +1,9 @@
 # TSWoW
 
+> This fork includes a Docker image and Compose deployment. See
+> [DOCKER.md](DOCKER.md) for a server setup that only requires Docker on the
+> host.
+
 TSWoW (TypeScript WoW) is a **free** modding framework, mod loader and integrated development environment for the World of Warcraft: Wrath of the Lich King (WotLK) expansion build around the [TrinityCore](https://github.com/trinitycore/trinitycore) emulator.
 
 With TSWoW, you use the TypeScript programming language and the VSCodium editor to easily modify the World of Warcraft game data and to script the behavior of the server.
