@@ -99,6 +99,26 @@ export class Connection {
             .bind(connection.sync));
     }
 
+    static connectAsync(connection: Connection) {
+        this.end(connection);
+        if(NodeConfig.UsePooling) {
+            connection.async = mysql.createPool(Object.assign({}, connection.settings, { enableKeepAlive: true}));
+            connection.sync = mysql.createPool(Object.assign({}, connection.settings, { enableKeepAlive: true}));
+        } else {
+            connection.async = mysql.createConnection(connection.settings);
+            connection.sync = mysql.createConnection(connection.settings);
+        }
+
+        connection.syncQuery = deasync(connection.sync.query
+            .bind(connection.sync));
+
+        return Promise.all([connection.async, connection.sync].map(client =>
+            new Promise<void>((resolve, reject) => client.connect(error =>
+                error ? reject(error) : resolve()
+            ))
+        )).then(() => undefined);
+    }
+
     protected settings: any;
     protected async: mysql.Pool | mysql.Connection | undefined;
     protected sync: mysql.Pool | mysql.Connection | undefined;
@@ -242,6 +262,20 @@ export class SqlConnection {
         this.endConnection();
         [this.auth,this.world_dst,this.world_src]
             .forEach((x)=>Connection.connect(x));
+    }
+
+    static connectSource() {
+        this.endConnection();
+        Connection.connect(this.world_src);
+    }
+
+    static connectSourceAsync() {
+        this.endConnection();
+        return Connection.connectAsync(this.world_src);
+    }
+
+    static disconnect() {
+        this.endConnection();
     }
 
     static getRows<C, Q, T extends SqlRow<C, Q>>(table: SqlTable<C, Q, T>, where: Q, first: boolean) {

@@ -4,10 +4,16 @@ Ce fichier est un index. Lire le guide pertinent avant de modifier le code.
 
 ## Règles critiques
 
-- Ne jamais exécuter `build data` dans le container TSWoW, sauf dans le cas en lecture seule autorisé ci-dessous.
-- `build data --readonly` est autorisé uniquement pour afficher avec `objectify` les effets d’une entité existante utilisée comme exemple ou modèle.
-- Ne jamais utiliser `build data --read-only` : cette option n’est pas reconnue par cette version de TSWoW et n’active pas le mode lecture seule.
-- Si une autre vérification nécessite `build data`, demander à l’utilisateur de l’exécuter.
+- Ne jamais exécuter `build data` dans le container TSWoW, y compris avec `--readonly` ou `--read-only`.
+- Pour inspecter une entité TSWoW existante, utiliser le MCP dédié `tswow_inspector` : découvrir le registre avec `list_entity_types`, puis appeler `objectify_entity` avec le type, l'ID et si possible un chemin ciblé comme `Effects`.
+- Le MCP est strictement en lecture seule et ne lance ni datascript ni `build data`.
+- Si une vérification nécessite réellement `build data`, demander à l’utilisateur de l’exécuter.
+
+## Exécution des commandes
+
+- Exécuter les commandes TSWoW et les outils fournis par son environnement Node depuis le service Docker `tswow`, jamais directement depuis l’hôte.
+- Utiliser `docker compose exec tswow <commande>` ou `docker exec tswow <commande>`, avec le répertoire de travail approprié sous `/var/lib/tswow`.
+- Les outils généraux du dépôt (`git`, `rg`, lecture et modification de fichiers) peuvent être exécutés depuis l’hôte.
 
 ## Guides à consulter
 

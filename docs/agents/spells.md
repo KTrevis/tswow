@@ -25,21 +25,13 @@ std.Spells
 
 ## Inspecter un spell de référence
 
-Pour comprendre un spell existant, ajouter temporairement un log ciblé dans un datascript :
+Pour comprendre un spell existant, utiliser le MCP en lecture seule `tswow_inspector` :
 
-```ts
-const example = std.Spells.load(133);
+1. Appeler `list_entity_types` pour vérifier le nom du registre, par exemple `Spells`.
+2. Appeler `objectify_entity` avec le registre et l'ID du spell.
+3. Utiliser autant que possible un chemin ciblé comme `Effects`, `Description`, `Duration` ou `Power`; augmenter `refDepth` uniquement lorsqu'une référence doit être développée.
 
-console.log(example.Effects.objectify());
-```
-
-Il est alors permis d’exécuter :
-
-```text
-build data --readonly
-```
-
-Cette exception sert uniquement à lire et afficher avec `objectify` les effets d’une entité utilisée comme exemple. Ne pas exécuter une autre variante de `build data`. Retirer le log temporaire une fois l’inspection terminée.
+Le MCP ne lance ni datascript ni `build data`. Ne pas ajouter de log temporaire dans un datascript pour cette inspection.
 
 ## Tooltips dynamiques
 
@@ -76,6 +68,39 @@ std.Spells
         'Corrompt la cible et lui inflige $<total> points de dégâts en $d.'
     );
 ```
+
+Pour définir plusieurs variables, séparer les affectations par `\r\n`, comme dans
+les données Blizzard :
+
+```ts
+.DescriptionVariable.setSimple(
+    "$damage=$s1\r\n$duration=$d"
+)
+```
+
+### Référencer un spell créé par le datascript
+
+Quand le tooltip décrit les effets d'un spell déclenché, construire la référence
+croisée avec son ID généré. Par exemple, si `TRIGGER` porte les dégâts dans son
+premier effet, `` `$${TRIGGER.ID}s1` `` produit le placeholder WoW
+`$12345s1` attendu dans les DBC.
+
+Dans un template literal TypeScript, une expression WoW `${...}` doit échapper
+son premier `$` pour ne pas être interprétée par TypeScript :
+
+```ts
+.DescriptionVariable.setSimple(
+    `$damage=$${TRIGGER.ID}s1\r\n$runicPower=\${$${TRIGGER.ID}s2/10}`
+)
+.Description.frFR.set(
+    "Inflige $<damage> points de dégâts et génère $<runicPower> points de puissance runique."
+)
+```
+
+Les valeurs internes de rage et de puissance runique sont exprimées en dixièmes
+de point dans WoW/TrinityCore. Pour un effet `ENERGIZE` de puissance runique,
+conserver la valeur interne dans l'effet et appliquer `/10` uniquement dans
+l'expression du tooltip.
 
 Les spells Blizzard peuvent combiner des références à d’autres spells, des expressions et des variables conditionnelles. Pour une formule complexe, commencer par rechercher et inspecter un spell existant utilisant un tooltip similaire.
 

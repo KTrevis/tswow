@@ -334,4 +334,6 @@ export type uint32 = number;
  */
 export const Objects = _Objects;
 
-mainWrap();
+if (require.main === module) {
+    mainWrap();
+}

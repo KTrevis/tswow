@@ -20,7 +20,9 @@ interface CastSpellRow extends IDeletable {
 
 let values: CastSpellRow[] = SQL.Databases.world_source
     .read(`SELECT * from \`playercreateinfo_cast_spell\`;`)
-SQL.Databases.world_dest.read(`DELETE FROM \`playercreateinfo_cast_spell\`;`)
+if(BuildArgs.WRITE_SERVER) {
+    SQL.Databases.world_dest.read(`DELETE FROM \`playercreateinfo_cast_spell\`;`)
+}
 
 finish('playercreateinfo_cast_spell',()=>{
     if(BuildArgs.READ_ONLY) return;

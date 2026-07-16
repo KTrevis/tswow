@@ -7786,7 +7786,7 @@ declare interface TSSpellInfo extends TSEntityProvider {
 	GetRuneCostID() : TSNumber<uint32>
 	GetSchoolMask() : TSNumber<uint32>
 	GetSpeed() : TSNumber<uint32>
-	GetSpellFamilyFlags() : TSNumber<uint32>
+	GetSpellFamilyFlags() : TSArray<TSNumber<uint32>>
 	GetSpellFamilyName() : TSNumber<uint32>
 	GetSpellIconID() : TSNumber<uint32>
 	GetSpellLevel() : TSNumber<uint32>
