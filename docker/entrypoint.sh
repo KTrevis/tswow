@@ -11,11 +11,11 @@ if [[ ! -f "${config_dir}/node.conf" ]]; then
   cp "${install_dir}/node.conf" "${config_dir}/node.conf"
 fi
 
-if [[ "${TSWOW_SKIP_RUNTIME_SEED:-0}" != "1" && -d "${install_dir}/modules" && -z "$(find "${state_dir}/modules" -mindepth 1 -print -quit)" ]]; then
+if [[ -d "${install_dir}/modules" && -z "$(find "${state_dir}/modules" -mindepth 1 -print -quit)" ]]; then
   cp -a "${install_dir}/modules/." "${state_dir}/modules/"
 fi
 
-if [[ "${TSWOW_SKIP_RUNTIME_SEED:-0}" != "1" && -d "${install_dir}/coredata" && -z "$(find "${state_dir}/coredata" -mindepth 1 -print -quit)" ]]; then
+if [[ -d "${install_dir}/coredata" && -z "$(find "${state_dir}/coredata" -mindepth 1 -print -quit)" ]]; then
   cp -a "${install_dir}/coredata/." "${state_dir}/coredata/"
 fi
 
@@ -31,8 +31,8 @@ until mysqladmin ping \
   --port="${TSWOW_DB_PORT:-3306}" \
   --user="${TSWOW_DB_USER:-root}" \
   --password="${TSWOW_DB_PASSWORD}" \
-  --silent >&2; do
-  echo "Waiting for MySQL..." >&2
+  --silent; do
+  echo "Waiting for MySQL..."
   sleep 2
 done
 

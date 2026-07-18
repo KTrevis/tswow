@@ -286,14 +286,9 @@ TSNumber<uint32> TSSpellInfo::GetSpeed()
     return info->Speed;
 }
 
-TSArray<TSNumber<uint32>> TSSpellInfo::GetSpellFamilyFlags()
+TSNumber<uint32> TSSpellInfo::GetSpellFamilyFlags()
 {
-    TSArray<TSNumber<uint32>> flags;
-    flags.reserve(3);
-    flags.push(info->SpellFamilyFlags[0]);
-    flags.push(info->SpellFamilyFlags[1]);
-    flags.push(info->SpellFamilyFlags[2]);
-    return flags;
+    return info->SpellFamilyFlags;
 }
 
 TSNumber<uint32> TSSpellInfo::GetSpellFamilyName()

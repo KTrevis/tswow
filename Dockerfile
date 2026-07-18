@@ -52,8 +52,6 @@ RUN test -f cores/TrinityCore/CMakeLists.txt \
     && git -C cores/TrinityCore config user.name Docker \
     && printf '*\n' > cores/TrinityCore/.git/info/exclude \
     && git -C cores/TrinityCore commit --allow-empty -m "Docker build ${TRINITYCORE_REVISION}" \
-    && npm --prefix .codex/mcp/tswow-inspector ci \
-    && npm --prefix .codex/mcp/tswow-inspector run build \
     && npm ci \
     && npm run build noac \
     && printf '%s' "${TSWOW_REVISION}" > /opt/tswow/tswow-install/bin/revisions/tswow \
@@ -66,7 +64,6 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=builder /opt/tswow/tswow-install /opt/tswow/install
-COPY --from=builder /opt/tswow/source/.codex/mcp/tswow-inspector/dist/server.cjs /opt/tswow/mcp/tswow-inspector/server.cjs
 COPY docker/entrypoint.sh /usr/local/bin/tswow-entrypoint
 COPY docker/configure-node-conf.js /usr/local/lib/tswow/configure-node-conf.js
 

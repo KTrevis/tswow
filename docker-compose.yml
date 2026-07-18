@@ -1,12 +1,5 @@
 name: tswow
 
-x-tswow-image: &tswow-image
-  image: ghcr.io/ktrevis/tswow:${TSWOW_IMAGE_TAG:-latest}
-  build:
-    context: .
-    dockerfile: Dockerfile
-  platform: linux/amd64
-
 services:
   mysql:
     image: mysql:8.0
@@ -29,8 +22,12 @@ services:
       - "127.0.0.1:3306:3306"
 
   tswow:
-    <<: *tswow-image
     container_name: tswow
+    image: ghcr.io/ktrevis/tswow:${TSWOW_IMAGE_TAG:-latest}
+    build:
+      context: .
+      dockerfile: Dockerfile
+    platform: linux/amd64
     restart: unless-stopped
     tty: true
     stdin_open: true
@@ -54,40 +51,6 @@ services:
       - ./runtime:/var/lib/tswow
       - ${WOW_CLIENT_PATH:?Set WOW_CLIENT_PATH in .env}:/client
       - ./runtime/launcher-packages:/opt/tswow/install/package
-    networks:
-      - tswow
-
-  tswow-mcp:
-    container_name: tswow-mcp
-    <<: *tswow-image
-    profiles:
-      - tools
-    stdin_open: true
-    depends_on:
-      mysql:
-        condition: service_healthy
-    environment:
-      TSWOW_DB_HOST: mysql
-      TSWOW_DB_PORT: 3306
-      TSWOW_DB_USER: root
-      TSWOW_DB_PASSWORD: ${TSWOW_DB_PASSWORD:?Set TSWOW_DB_PASSWORD in .env}
-      TSWOW_STATE_DIR: /var/lib/tswow
-      TSWOW_SKIP_RUNTIME_SEED: "1"
-      LD_LIBRARY_PATH: /opt/tswow/install/bin/trinitycore/RelWithDebInfo:/opt/tswow/install/bin/libraries/RelWithDebInfo
-    command:
-      - node
-      - /opt/tswow/mcp/tswow-inspector/server.cjs
-      - --ipaths=./
-      - --dataset=/var/lib/tswow/modules/default/datasets/dataset
-      - --datasetName=default.dataset
-      - --clientPatch=/tmp/tswow-mcp-client
-      - --readonly
-      - --no-luaxml
-    volumes:
-      - ./runtime/modules:/var/lib/tswow/modules:ro
-      - ./runtime/coredata:/var/lib/tswow/coredata:ro
-    tmpfs:
-      - /var/lib/tswow/config
     networks:
       - tswow
 

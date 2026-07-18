@@ -1,6 +1,0 @@
-[mcp_servers.tswow_inspector]
-command = "bash"
-args = [".codex/mcp/tswow-inspector/start.sh"]
-cwd = "/Users/galadrim/dev/tswow"
-startup_timeout_sec = 60
-tool_timeout_sec = 30
