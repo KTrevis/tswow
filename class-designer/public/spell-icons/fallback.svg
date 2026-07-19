@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Icône de sort inconnue">
-  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#3b4252"/><stop offset="1" stop-color="#141820"/></linearGradient></defs>
-  <rect width="64" height="64" rx="8" fill="url(#g)"/>
-  <path d="M22 25a10 10 0 0 1 20 0c0 8-8 8-8 14" fill="none" stroke="#d5ad5a" stroke-width="5" stroke-linecap="round"/>
-  <circle cx="32" cy="48" r="3" fill="#d5ad5a"/>
-</svg>
