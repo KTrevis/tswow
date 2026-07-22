@@ -157,7 +157,11 @@ export class Livescripts {
 
         config["compilerOptions"]["outDir"] = buildDir.relativeTo(this.mod.path).get()
         config['include'] = ['livescripts','shared']
-        config['compilerOptions']['rootDir'] = this.path.dirname().abs().get();
+        // Keep rootDir relative to the module tsconfig. An absolute module path
+        // may traverse a symlink (for example /opt/.../modules -> /var/lib/...)
+        // while TypeScript canonicalizes source paths, causing TS6059 even
+        // though both paths point to the same module directory.
+        config['compilerOptions']['rootDir'] = '.';
         this.mod.path.livescript_tsconfig_temp.writeJson(config)
 
         let foundTs = false;
