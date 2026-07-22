@@ -501,6 +501,19 @@ export class DurabilityDamage extends DamageBase {
     get Slot() { return this.wrap(this.owner.MiscValueA); }
 }
 // 112
+export class ToggleGuardian extends TargetBase {
+    /** Entry in creature_template. */
+    get SummonedCreature() { return CreatureTemplateRegistry.ref(this, this.owner.MiscValueA); }
+
+    /** Entry in SummonProperties.dbc. */
+    get SummonProperties() { return this.wrap(this.owner.MiscValueB); }
+
+    /** Aura applied to the owner while the guardian exists. */
+    get OwnerAura() { return SpellRegistry.ref(this, this.owner.ItemType); }
+
+    /** Spell cast on the owner when the guardian is sacrificed. */
+    get SacrificeSpell() { return SpellRegistry.ref(this, this.owner.TriggerSpell); }
+}
 // 113
 // 114
 // 115
