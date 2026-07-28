@@ -30,7 +30,7 @@ import { NodeExecutable } from "./Node";
 import { NodeConfig } from "./NodeConfig";
 import { applyTSTLHack } from "./TSTLHack";
 
-const defaultTsConfig = (addon: Addon) => ({
+const defaultTsConfig = () => ({
     "compilerOptions": {
       "target": "esnext",
       "lib": ["esnext", "dom"],
@@ -51,9 +51,9 @@ const defaultTsConfig = (addon: Addon) => ({
     "tstl": {
       "luaTarget": "5.1",
       "luaPlugins": [
-        {     "name": ipaths.bin.scripts.addons.addons.require_preload
-                        .relativeTo(addon.path).get()
-            , 'import':'RequirePreload'
+        {
+          "name": ipaths.bin.scripts.addons.addons.require_preload.abs().get(),
+          "import": "RequirePreload",
         },
       ],
       "noImplicitSelf": true,
@@ -255,7 +255,7 @@ export class Addon {
 
     initialize() {
         let exists = this.path.exists();
-        this.path.tsconfig_json.writeJson(defaultTsConfig(this),4,'OVERWRITE')
+        this.path.tsconfig_json.writeJson(defaultTsConfig(),4,'OVERWRITE')
         this.path.index_ts.write(addon_example_ts(this.mod.fullName),'DONT_OVERWRITE')
         ipaths.bin.include_addon.global_d_ts.copy(this.path.global_d_ts)
         if(!exists) {
@@ -293,11 +293,14 @@ export class Addon {
             .filter(mod=>mod.addon.path.build.exists())
             .forEach(mod=>{
                 mod.addon.addFilelistToToc(tocfile);
-                mod.addon.path.build.copy(
-                    dataset.path.luaxml.Interface.FrameXML.TSAddons.mod
-                        .pick(mod.relativePath.get()
-                    )
-                )
+                const relativePath = mod.relativePath.get();
+                const target = dataset.path.luaxml.Interface.FrameXML
+                    .TSAddons.mod.pick(relativePath);
+                const devTarget = dataset.client.path.Data.devPatch
+                    .Interface.FrameXML.TSAddons.join(relativePath);
+                target.remove();
+                devTarget.remove();
+                mod.addon.path.build.copy(target);
             })
         wfs.writeLines(dataset.path.luaxml.Interface.FrameXML.framexml_toc, tocfile);
         dataset.path.luaxml.copy(dataset.client.path.Data.devPatch)

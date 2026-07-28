@@ -11,9 +11,15 @@ void TSLua::load_db_json_methods(sol::state& state)
     LUA_FIELD(ts_db_json, TSDBJsonProvider, SetDBUInt64);
     LUA_FIELD(ts_db_json, TSDBJsonProvider, SetDBInt64);
     LUA_FIELD(ts_db_json, TSDBJsonProvider, SetDBFloat);
+    LUA_FIELD(ts_db_json, TSDBJsonProvider, SetDBString);
     LUA_FIELD(ts_db_json, TSDBJsonProvider, SetDBBool);
     LUA_FIELD(ts_db_json, TSDBJsonProvider, SetDBObject);
     LUA_FIELD(ts_db_json, TSDBJsonProvider, SetDBArray);
+    LUA_FIELD(ts_db_json, TSDBJsonProvider, DeleteDBField);
+    LUA_FIELD(ts_db_json, TSDBJsonProvider, SaveDBJson);
+    LUA_FIELD(ts_db_json, TSDBJsonProvider, LoadDBJson);
+    LUA_FIELD(ts_db_json, TSDBJsonProvider, DeleteDBJson);
+    LUA_FIELD(ts_db_json, TSDBJsonProvider, ClearDBJson);
     ts_db_json.set_function("GetDBNumber", sol::overload
     (
         [](TSDBJsonProvider& provider, std::string const& key, double value) { return provider.GetDBNumber(key,value); },
@@ -48,6 +54,11 @@ void TSLua::load_db_json_methods(sol::state& state)
     (
         [](TSDBJsonProvider& provider, std::string const& key, bool value) { return provider.GetDBBool(key,value); },
         [](TSDBJsonProvider& provider, std::string const& key) { return provider.GetDBBool(key); }
+    ));
+    ts_db_json.set_function("GetDBString", sol::overload
+    (
+        [](TSDBJsonProvider& provider, std::string const& key, std::string const& value) { return provider.GetDBString(key,value); },
+        [](TSDBJsonProvider& provider, std::string const& key) { return provider.GetDBString(key); }
     ));
     ts_db_json.set_function("GetDBObject", sol::overload
     (

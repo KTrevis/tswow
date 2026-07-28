@@ -1,5 +1,6 @@
 import * as child_process from 'child_process';
 import * as fs from 'fs';
+import * as os from 'os';
 import * as path from 'path';
 import { PNG } from 'pngjs';
 import * as pureimage from 'pureimage';
@@ -79,7 +80,10 @@ export class TSImage {
         }
         const pathPng = pathRaw+'.png';
         const pathBlp = pathRaw+'.blp';
-        const temporaryRaw = `${pathRaw}.${process.pid}.${Date.now()}`;
+        // Keep temporary files outside luaxml: concurrent builds may replace
+        // that directory while conversion is still running.
+        const temporaryDir = fs.mkdtempSync(path.join(os.tmpdir(),'tsimage-'));
+        const temporaryRaw = path.join(temporaryDir,path.basename(pathRaw));
         const temporaryPng = temporaryRaw+'.png';
         const temporaryBlp = temporaryRaw+'.blp';
 
@@ -106,12 +110,7 @@ export class TSImage {
                 fs.rmSync(pathBlp);
             }
         } finally {
-            if(fs.existsSync(temporaryPng)) {
-                fs.rmSync(temporaryPng);
-            }
-            if(fs.existsSync(temporaryBlp)) {
-                fs.rmSync(temporaryBlp);
-            }
+            fs.rmSync(temporaryDir,{recursive:true,force:true});
         }
     }
 
