@@ -31,8 +31,6 @@ std::vector<std::string> special_files = {
 	, "textures\\minimap\\md5translate.trs"
 };
 
-HANDLE handle = NULL;
-
 namespace fs = boost::filesystem;
 
 fs::path findClientLang(fs::path directory) {
@@ -52,34 +50,43 @@ fs::path findClientLang(fs::path directory) {
 	throw std::runtime_error("No lang directory found in "+directory.string());
 }
 
-int counter = 0;
-void handleFile(HANDLE hMpq, std::string const& file,std::string const& outputDir) {
+void handleFile(
+	  HANDLE hMpq
+	, std::string const& file
+	, std::string const& outputDir
+	, std::string const& iconOutputDir
+) {
 	std::string fileLower = file;
 	std::transform(fileLower.begin(), fileLower.end(), fileLower.begin(),
 		[](unsigned char c){ return std::tolower(c); });
 
+	const bool isSpellIcon =
+		   boost::algorithm::starts_with(fileLower, "interface\\icons\\")
+		&& boost::algorithm::ends_with(fileLower, ".blp");
+
 	if(
-		   boost::algorithm::ends_with(file,".xml")
-		|| boost::algorithm::ends_with(file,".lua")
-		|| boost::algorithm::ends_with(file,".toc")
+		   boost::algorithm::ends_with(fileLower,".xml")
+		|| boost::algorithm::ends_with(fileLower,".lua")
+		|| boost::algorithm::ends_with(fileLower,".toc")
+		|| isSpellIcon
 		|| std::find(special_files.begin(),special_files.end(),fileLower) != special_files.end())
 	{
-		auto f = file;
+		auto f = isSpellIcon ? fileLower : file;
 		std::replace(f.begin(),f.end(),'\\','/');
-		fs::path outfile = outputDir / fs::path(f);
+		fs::path outfile = (isSpellIcon ? iconOutputDir : outputDir) / fs::path(f);
 		fs::create_directories(outfile.parent_path());
 		SFileExtractFile(hMpq,file.c_str(),outfile.string().c_str(),0);
-		++counter;
 	}
 }
 
 int main(int argc, char **argv) {
-	if (argc < 2) {
-		std::cout << "Usage: luaxmlreader outputDir clientPath inputDir1";
+	if (argc < 3) {
+		std::cout << "Usage: luaxmlreader outputDir clientPath [iconOutputDir]";
 		return -1;
 	}
 
 	std::string outputDir = argv[1];
+	std::string iconOutputDir = argc >= 4 ? argv[3] : outputDir;
 	fs::path langdir = findClientLang(fs::path(argv[2]));
 	fs::path mainfile;
 	std::vector<fs::path> patches;
@@ -123,17 +130,15 @@ int main(int argc, char **argv) {
 		}
 	}
 
-	HANDLE find_handle = NULL;
-	SFILE_FIND_DATA* f = new SFILE_FIND_DATA;
-	if ((find_handle = SFileFindFirstFile(mpq, "*", f, 0))) {
-		handleFile(mpq, std::string(f->cFileName), outputDir);
+	SFILE_FIND_DATA fileData;
+	HANDLE findHandle = SFileFindFirstFile(mpq, "*", &fileData, 0);
+	if (findHandle != NULL) {
+		do {
+			handleFile(mpq, std::string(fileData.cFileName), outputDir, iconOutputDir);
+		} while (SFileFindNextFile(findHandle, &fileData));
+		SFileFindClose(findHandle);
 	}
 
-	while (SFileFindNextFile(find_handle, f)) {
-		handleFile(mpq, std::string(f->cFileName), outputDir);
-	}
-
-	SFileFindClose(find_handle);
 	SFileCloseArchive(mpq);
 	return 0;
 }

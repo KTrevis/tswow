@@ -72,6 +72,7 @@ export function DatasetDirectory(inPath: string, inName: string) {
                 })
             })
         }),
+        client_icons: dir({}),
         maps: dir({}),
         mmaps: dir({}),
         vmaps: dir({}),

@@ -16,6 +16,7 @@ export class Crashes {
             ignored: [
                 /build$/
               , /Buildings$/
+              , /client_icons$/
               , /maps$/
               , /vmaps$/
               , /mmaps$/

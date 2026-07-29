@@ -20,9 +20,10 @@ import { CellSystem } from "../../../data/cell/systems/CellSystem";
 import { Edit, EditSystem } from "../../../data/luaxml/TextFile";
 import { LUAXML } from "../../luaxml/LUAXML";
 import { TSImage } from "../Images/Image";
+import { SpellIconCell } from "../Spell/SpellIcon";
 import { AnchorRow } from "../UI/Components/AnchorRow";
 import { Class } from "./Class";
-import { stitchClassIcon } from "./ClassIcon";
+import { loadClassIcon, stitchClassIcon } from "./ClassIcon";
 
 function float(rgb : number) {
     let str = `{ r = ${(((rgb>>16)&0xff)/255.0).toFixed(2)} , `
@@ -195,12 +196,29 @@ export class ClassUISettings extends CellSystem<Class> {
     readonly Description: ClassDescription;
     readonly DisabledText: ClassDisabledText;
 
-    setIcon(image: TSImage, oldIndex?: number) {
+    /**
+     * Sets the class icon from an image or an existing spell icon.
+     *
+     * Spell icons must have been extracted by running "build luaxml".
+     */
+    setIcon(image: TSImage|SpellIconCell<any>, oldIndex?: number) {
+        if(image instanceof SpellIconCell) {
+            return this.setIconPath(image.getPath(),oldIndex);
+        }
         let index = stitchClassIcon(image,oldIndex);
         let x1 = (index%8)/8
         let y1 = Math.floor(index/8)/8;
         this.ButtonTCoords.set(x1,x1+0.125,y1,y1+0.125);
         return this.owner;
+    }
+
+    /**
+     * Sets the class icon from a texture under Interface/Icons.
+     *
+     * The path accepts the same short or full form as Spell.Icon.setPath().
+     */
+    setIconPath(iconPath: string, oldIndex?: number) {
+        return this.setIcon(loadClassIcon(iconPath),oldIndex);
     }
 
     constructor(cls : Class,tCoordsCC : Edit, tCoordsWS: Edit, classColor : Edit, sortOrder : Edit, tCoords : Edit, xmlEdit : Edit, maleDescription : Edit, femaleDescription : Edit,infoRows : Edit[], disabled: Edit) {

@@ -39,7 +39,10 @@ ARG TRINITYCORE_REVISION=docker-build
 WORKDIR /opt/tswow/source
 COPY . .
 
-RUN test -f cores/TrinityCore/CMakeLists.txt \
+# Preserve native build objects when only scripts or auxiliary tools change.
+RUN --mount=type=cache,id=tswow-build,target=/opt/tswow/tswow-build,sharing=locked \
+    --mount=type=cache,id=tswow-npm,target=/root/.npm,sharing=locked \
+    test -f cores/TrinityCore/CMakeLists.txt \
     && test -f misc/adt-creator/CMakeLists.txt \
     && rm -f cores/TrinityCore/.git misc/adt-creator/.git \
     && git init \

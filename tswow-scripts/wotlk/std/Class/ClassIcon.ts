@@ -7,6 +7,7 @@ import { ClassRegistry } from './ClassRegistry';
 const SQUARES_LOCAL = "Interface/GLUES/CHARACTERCREATE/UI-CHARACTERCREATE-CLASSES.BLP"
 const CIRCLES_LOCAL = "Interface/TARGETINGFRAME/UI-Classes-Circles.blp"
 const WORLDSTATE_LOCAL = "Interface/WorldStateFrame/ICONS-CLASSES.BLP"
+const SPELL_ICONS_LOCAL = "Interface/Icons"
 const SQUARES_PATH = dataset.luaxml_source.join(SQUARES_LOCAL)
 const CIRCLES_PATH = dataset.luaxml_source.join(CIRCLES_LOCAL)
 const WORLDSTATE_PATH = dataset.luaxml_source.join(WORLDSTATE_LOCAL)
@@ -53,6 +54,26 @@ function setupImages() {
 }
 
 let hasStitched = false;
+
+export function loadClassIcon(iconPath: string) {
+    let normalized = iconPath.replace(/\\/g,'/');
+    if(normalized.toLowerCase().endsWith('.blp')) {
+        normalized = normalized.substring(0,normalized.length-4);
+    }
+    if(!normalized.toLowerCase().startsWith('interface/')) {
+        normalized = `${SPELL_ICONS_LOCAL}/${normalized}`;
+    }
+
+    const sourcePath = dataset.client_icons.join(`${normalized.toLowerCase()}.blp`);
+    if(!sourcePath.exists()) {
+        throw new Error(
+            `Class icon "${iconPath}" was not found in the extracted client files. `
+            + `Run "build luaxml" with a luaxmlreader version that extracts spell icons.`
+        )
+    }
+    return TSImages.read(sourcePath.get());
+}
+
 export function stitchClassIcon(image: TSImage, index: number = -1) {
     if(index<0) {
         index = stitchIndex++;

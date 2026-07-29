@@ -123,8 +123,9 @@ export namespace MapData {
         term.debug('misc', `Building luaxml from ${dataset.client.path.abs()}`)
         wsys.exec(
               `"${ipaths.bin.mpqbuilder.luaxml_exe.get()}"`
-            + ` ${dataset.path.luaxml_source.abs()}`
-            + ` ${dataset.client.path.Data.abs()}`, 'inherit');
+            + ` "${dataset.path.luaxml_source.abs()}"`
+            + ` "${dataset.client.path.Data.abs()}"`
+            + ` "${dataset.path.client_icons.abs()}"`, 'inherit');
         dataset.path.luaxml_source.copy(dataset.path.luaxml)
     }
 

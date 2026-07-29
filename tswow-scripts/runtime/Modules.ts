@@ -47,6 +47,7 @@ DBErrors.log
 *_backup/
 
 # Extracted client data
+**/datasets/*/client_icons
 **/datasets/*/dbc_source
 **/datasets/*/dbc
 **/datasets/*/maps
@@ -313,6 +314,7 @@ export class Module {
                 ignored: [
                       /build$/
                     , /Buildings$/
+                    , /client_icons$/
                     , /maps$/
                     , /vmaps$/
                     , /mmaps$/
