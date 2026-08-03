@@ -88,6 +88,8 @@ import { SpellMissileRegistry } from "./std/Spell/SpellMissile";
 import { SpellRuneCostRegistry } from "./std/Spell/SpellPower";
 import { SpellRangeRegistry } from "./std/Spell/SpellRange";
 import { SpellRegistry } from "./std/Spell/Spells";
+import { SpellScalingRegistry } from "./std/Spell/SpellScaling";
+export { SpellScalingID, SpellScalingPoint } from "./std/Spell/SpellScaling";
 import { SpellStackGroupRegistry } from "./std/Spell/SpellStackGroup";
 import { SpellVisualKitRegistry, SpellVisualRegistry } from "./std/Spell/SpellVisual";
 import { SpellVisualEffectRegistry } from "./std/Spell/SpellVisualEffect";
@@ -115,6 +117,7 @@ import { WorldStateUIRegistry } from "./std/WorldState/WorldStateUI";
 
 export const std = {
     Spells : SpellRegistry,
+    SpellScalings: SpellScalingRegistry,
     SpellVisuals: SpellVisualRegistry,
     SpellVisualKits: SpellVisualKitRegistry,
     SpellVisualEffects: SpellVisualEffectRegistry,

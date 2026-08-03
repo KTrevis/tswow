@@ -47,6 +47,11 @@ export class SpellRegistryClass extends RegistryStatic<Spell,SpellRow,SpellQuery
             if(parentEntity.CustomAttributes.exists()) {
                 parentEntity.CustomAttributes.sqlRow().clone(v.ID)
             }
+            SQL.spell_effect_scaling.queryAll({spell_id: parent}).forEach(row => {
+                if (!row.isDeleted()) {
+                    row.clone(v.ID, row.effect_index.get())
+                }
+            })
             // note: we're never cloning spell_script_names, spell_scripts or spell_target_position
         }
         return v;
@@ -71,6 +76,9 @@ export class SpellRegistryClass extends RegistryStatic<Spell,SpellRow,SpellQuery
         return e.ID;
     }
     Clear(r: Spell) {
+        SQL.spell_effect_scaling
+            .queryAll({spell_id: r.ID})
+            .forEach(row => row.delete())
         r.row
             .ActiveIconID.set(0)
             .Attributes.set(0)

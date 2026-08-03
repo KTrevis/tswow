@@ -19,6 +19,7 @@ import { makeMaskCell32, MaskCell32, MaskCell64 } from "../../../data/cell/cells
 import { Transient } from "../../../data/cell/serialization/Transient";
 import { loc_constructor } from "../../../data/primitives";
 import { SpellRow } from "../../dbc/Spell";
+import { SQL } from "../../SQLFiles";
 import { AreaGroupRegistry } from "../Area/AreaGroup";
 import { getInlineID } from "../InlineScript/InlineScript";
 import { CodegenSettings, GenerateCode } from "../Misc/Codegen";
@@ -227,6 +228,9 @@ export class Spell extends MainEntityID<SpellRow> {
     }
 
     clear() {
+        SQL.spell_effect_scaling
+            .queryAll({spell_id: this.ID})
+            .forEach(row => row.delete());
         this.row
             .ActiveIconID.set(0)
             .Attributes.set(0)

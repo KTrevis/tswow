@@ -16,11 +16,13 @@
  */
 import { CPrim } from "../../../data/cell/cells/Cell";
 import { CellArray } from "../../../data/cell/cells/CellArray";
+import { CellSystem } from "../../../data/cell/systems/CellSystem";
 import { EnumCellTransform, EnumValueTransform, makeEnumCell } from "../../../data/cell/cells/EnumCell";
 import { Objectified, ObjectifyOptions, Objects } from "../../../data/cell/serialization/ObjectIteration";
 import { Transient } from "../../../data/cell/serialization/Transient";
 import { ArrayEntry, ArraySystem } from "../../../data/cell/systems/ArraySystem";
 import { DBC } from "../../DBCFiles";
+import { SQL } from "../../SQLFiles";
 import { Ids } from "../Misc/Ids";
 import { ShiftedNumberCell } from "../Misc/ShiftedNumberCell";
 import { AuraType } from "./AuraType";
@@ -31,6 +33,7 @@ import { SpellEffectType } from "./SpellEffectType";
 import { SpellImplicitTarget } from "./SpellImplicitTarget";
 import { SpellRadiusRegistry } from "./SpellRadius";
 import { SpellRegistry } from "./Spells";
+import { SpellScalingID } from "./SpellScaling";
 import { SpellTargetPosition } from "./SpellTargetPosition";
 
 export class SpellEffects extends ArraySystem<SpellEffect,Spell> {
@@ -56,6 +59,7 @@ export class SpellEffects extends ArraySystem<SpellEffect,Spell> {
         let ds1 = e1.PointsDieSides.get();
         let ppl1 = e1.PointsPerLevel.get();
         let ppc1 = e1.PointsPerCombo.get();
+        let scaling1 = e1.Scaling.get();
         let ita1 = e1.ImplicitTargetA.get();
         let itb1 = e1.ImplicitTargetB.get();
         let ap1 = e1.AuraPeriod.get();
@@ -76,6 +80,11 @@ export class SpellEffects extends ArraySystem<SpellEffect,Spell> {
         e2.PointsDieSides.set(ds1);
         e2.PointsPerLevel.set(ppl1);
         e2.PointsPerCombo.set(ppc1);
+        if (scaling1 === 0) {
+            e2.Scaling.clear();
+        } else {
+            e2.Scaling.set(scaling1);
+        }
         e2.ImplicitTargetA.set(ita1);
         e2.ImplicitTargetB.set(itb1);
         e2.AuraPeriod.set(ap1);
@@ -219,6 +228,7 @@ export class SpellEffect extends ArrayEntry<Spell> {
     }
 
     clear(): this {
+        this.Scaling.clear();
         this.PointsBase.set(0);
         this.ChainAmplitude.set(1);
         this.ChainTarget.set(0);
@@ -280,6 +290,7 @@ export class SpellEffect extends ArrayEntry<Spell> {
     get TriggerSpell() { return this.w(this.row.EffectTriggerSpell); }
     get ChainAmplitude() { return this.w(this.row.EffectChainAmplitude); }
     get BonusMultiplier() { return this.w(this.row.EffectBonusMultiplier); }
+    get Scaling() { return new SpellEffectScaling(this); }
     get ClassMask(): EffectClassSet<this> { return new EffectClassSet(this, this); }
     get TargetPosition() {
         return new SpellTargetPosition(this, this.row.ID.get(), this.index);
@@ -330,6 +341,12 @@ export class SpellEffect extends ArrayEntry<Spell> {
         this.PointsDieSides.set(source.PointsDieSides.get());
         this.PointsPerLevel.set(source.PointsPerLevel.get());
         this.PointsPerCombo.set(source.PointsPerCombo.get());
+        const scaling = source.Scaling.get();
+        if (scaling === 0) {
+            this.Scaling.clear();
+        } else {
+            this.Scaling.set(scaling);
+        }
         this.ImplicitTargetA.set(source.ImplicitTargetA.get());
         this.ImplicitTargetB.set(source.ImplicitTargetB.get());
         this.AuraPeriod.set(source.AuraPeriod.get());
@@ -341,5 +358,46 @@ export class SpellEffect extends ArrayEntry<Spell> {
         this.ChainAmplitude.set(source.ChainAmplitude.get());
         this.ClassMask.copyFrom(source.ClassMask);
         return this.owner;
+    }
+}
+
+export class SpellEffectScaling extends CellSystem<SpellEffect> {
+    private rawRow() {
+        return SQL.spell_effect_scaling.query({
+            spell_id: this.owner.row.ID.get(),
+            effect_index: this.owner.index,
+        });
+    }
+
+    private row() {
+        const row = this.rawRow();
+        return row && !row.isDeleted() ? row : undefined;
+    }
+
+    set(scalingId: number = SpellScalingID.UNIVERSAL) {
+        if (!Number.isInteger(scalingId) || scalingId <= 0) {
+            throw new Error(`Invalid spell scaling id ${scalingId}`);
+        }
+
+        const row = this.rawRow() || SQL.spell_effect_scaling.add(
+            this.owner.row.ID.get(),
+            this.owner.index,
+        );
+        row.undelete().scaling_id.set(scalingId);
+        this.owner.PointsPerLevel.set(0);
+        return this.owner;
+    }
+
+    get() {
+        return this.row()?.scaling_id.get() || 0;
+    }
+
+    clear() {
+        this.row()?.delete();
+        return this.owner;
+    }
+
+    objectify() {
+        return this.get();
     }
 }

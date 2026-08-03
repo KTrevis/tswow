@@ -64,6 +64,45 @@ Placeholders courants :
 | `$lpoint:points;` | Forme singulier/pluriel |
 | `$<variable>` | Variable définie dans `SpellDescriptionVariables.dbc` |
 
+## Scaling automatique opt-in
+
+Le scaling automatique est activé séparément sur chaque effet. Sans appel à
+`Scaling.set()`, un spell conserve exactement son calcul 3.3.5.
+
+```ts
+spell.Effects.mod(0, effect => {
+    effect.PointsBase.set(100, 'EFFECTIVE');
+    effect.Scaling.set(); // profil UNIVERSAL
+});
+```
+
+La valeur DBC effective de l'effet sert d'ancre au niveau
+`max(SpellLevel, BaseLevel)`. `Scaling.set()` remet `PointsPerLevel` à zéro et
+le core applique ensuite la courbe au niveau du lanceur. `Scaling.clear()`
+désactive le profil, et `Scaling.get()` renvoie son ID ou `0`.
+
+Un profil par paliers peut être créé pour un module. Le niveau 1 est
+obligatoire, les valeurs doivent être finies et strictement positives, et la
+dernière valeur déclarée est conservée jusqu'au point suivant :
+
+```ts
+const customScaling = std.SpellScalings
+    .create('my-mod', 'my-scaling')
+    .Points.set([
+        [1, 1],
+        [20, 12],
+        [40, 35],
+        [60, 70],
+        [80, 120],
+    ]);
+
+spell.Effects.get(0).Scaling.set(customScaling.ID);
+```
+
+Le client 3.3.5 ne connaît pas ces courbes serveur : un placeholder comme
+`$s1` continue d'afficher la valeur d'ancrage. Le résultat en combat est en
+revanche calculé avec le profil sélectionné.
+
 ## Formules personnalisées
 
 Utiliser `DescriptionVariable.setSimple` pour définir des variables réutilisables dans le tooltip :

@@ -236,6 +236,9 @@ export const Ids = {
     /** Starts at 182, highest base value is 181*/
     SpellDescriptionVariable: new DynamicIDGenerator('SpellDescriptionVariables',182),
 
+    /** IDs below 1000 are reserved for built-in spell scaling profiles. */
+    SpellScaling: new StaticIDGenerator('spell_scaling',1000),
+
     /** Starts at 33, highest base value is 32 */
     SpellShapeshiftForm: new DynamicIDGenerator('SpellShapeshiftForm',33),
 
